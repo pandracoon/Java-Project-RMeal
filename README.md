@@ -1,2 +1,0 @@
-# Java-Project-RMeal
-ㅇㅇㅇ
