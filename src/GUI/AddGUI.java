@@ -25,7 +25,6 @@ public class AddGUI extends JFrame {
       public void actionPerformed(ActionEvent e) {
         dispose();
         new mainGUI();
-
       }
     });
    container.add(ja);
