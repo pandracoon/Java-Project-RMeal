@@ -3,13 +3,18 @@ package Data;
 import java.util.ArrayList;
 
 public interface OptionList {
-
+ String[] getList();
 }
 
 class TypeList implements OptionList {
-    String[] typeList = {
-        "한식", "일식", "중식", "양식", "기타"
-    };
+
+   public String[] getList(){
+     String[] typeList = {
+         "한식", "일식", "중식", "양식", "기타"
+     };
+
+     return typeList;
+  }
 }
 
 class CostList implements OptionList {
