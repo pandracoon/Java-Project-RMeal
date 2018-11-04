@@ -1,14 +1,11 @@
 package Data;
 
-public interface Option {
+public class Option {
 
-}
+  private String option;
 
-class ResType implements Option {
-
-  private String type;
-
-  public ResType(String type) {
-    this.type = type;
+  public Option(String option) {
+    this.option = option;
   }
 }
+
