@@ -27,8 +27,8 @@ public class OptionList {
     costList.add("5000원 미만");
     costList.add("10000원 미만");
     costList.add("15000원 미만");
-    costList.add("2000원 미만");
-    costList.add("2000원 이상");
+    costList.add("20000원 미만");
+    costList.add("20000원 이상");
 
     numOfPeopleList.add("1인 가능");
     numOfPeopleList.add("2인 가능");

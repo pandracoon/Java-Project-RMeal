@@ -20,7 +20,7 @@ public class AddGUI extends JFrame {
 
   AddGUI(ArrayList<Restaurant> resList, OptionList optionList) {
 
-    setTitle("RMeal-ADD DATA");
+    setTitle("RMeal");
 
     Container container = this.getContentPane();
     container.setBackground(Color.WHITE);
@@ -29,7 +29,7 @@ public class AddGUI extends JFrame {
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 추가", 20, 20, 200, 50, 50);
-    titleLabel.setFont(new Font("나눔고딕 ExtraBold", Font.BOLD, 40));
+    titleLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 40));
     container.add(titleLabel);
 
     JLabel explainLabel = createJLabel("이름과 위치를 입력하고 해당하는 내용을 전부 체크하세요.", 220, 30, 500, 50, 20);
@@ -45,7 +45,7 @@ public class AddGUI extends JFrame {
     container.add(nameTextAreaPanel);
 
     nameTextField = new JTextField();
-    nameTextField.setFont(new Font("나눔고딕 Bold", Font.BOLD, 17));
+    nameTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
     nameTextAreaPanel.add(nameTextField);
 
     JPanel locationTextAreaPanel = createJPanel(495, 80, 485, 65);
@@ -55,7 +55,7 @@ public class AddGUI extends JFrame {
     container.add(locationTextAreaPanel);
 
     locationTextField = new JTextField();
-    locationTextField.setFont(new Font("나눔고딕 Bold", Font.BOLD, 17));
+    locationTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
     locationTextAreaPanel.add(locationTextField);
 
     JPanel typeCheckBoxPanel = createJPanel(10, 145, 320, 535);
@@ -124,11 +124,11 @@ public class AddGUI extends JFrame {
           return;
         }
         int choice = JOptionPane.showOptionDialog(container, nameTextField.getText() + " 식당을 "
-                + "추가하시겠습니까?", "돌아가기",
+                + "추가하시겠습니까?", "추가하기",
             //식당 이름 나오게 세팅해야함
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
-          addRestaurant(container);
+          resList.add(addRestaurant(optionList));
           JOptionPane
               .showMessageDialog(container, "추가되었습니다!", "추가 성공", JOptionPane.INFORMATION_MESSAGE);
           dispose();
@@ -145,7 +145,7 @@ public class AddGUI extends JFrame {
 
   }
 
-  public Restaurant addRestaurant(Container container) {
+  public Restaurant addRestaurant(OptionList optionList) {
 
     Restaurant restaurant = new Restaurant(nameTextField.getText(), locationTextField.getText());
 
@@ -163,6 +163,10 @@ public class AddGUI extends JFrame {
       if (this.numOfPeopleCheckBox[i].isSelected()) {
         restaurant.addOption(new Option(numOfPeopleCheckBox[i].getText()));
       }
+    }
+
+    if(!optionList.getList(OptionList.LOC).contains(locationTextField.getText())){
+      optionList.getList(OptionList.LOC).add(locationTextField.getText());
     }
 
     return restaurant;

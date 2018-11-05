@@ -17,5 +17,9 @@ public class Restaurant {
     optionArrayList.add(option);
 
   }
+
+  public String getName(){
+    return name;
+  }
 }
 

@@ -42,6 +42,15 @@ public class RMealMainGUI {
       JButton buttonSearch = createJButton("식당 조회", 350, 490, 300, 50, 20);
       buttonSearch.setBackground(Color.GRAY);
       buttonSearch.setForeground(Color.WHITE);
+      buttonSearch.addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          dispose();
+          new SearchGUI(resList, optionList);
+
+        }
+      });
       container.add(buttonSearch);
 
       JButton buttonRecommend = createJButton("식당 추천", 350, 560, 300, 50, 20);
@@ -56,7 +65,6 @@ public class RMealMainGUI {
       setSize(1000, 800);
       setVisible(true);
     }
-
   }
 
 
