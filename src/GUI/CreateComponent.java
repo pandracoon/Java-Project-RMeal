@@ -13,8 +13,9 @@ public class CreateComponent {
    return jPanel;
  }
 
-  public static JCheckBox createJCheckBox(String text, int size) {
+  public static JCheckBox createJCheckBox(String text, int width,int height,int size) {
     JCheckBox jCheckBox = new JCheckBox(text);
+    jCheckBox.setSize(width,height);
     jCheckBox.setFont(new Font("나눔스퀘어 BOLD", Font.BOLD, size));
     jCheckBox.setBackground(Color.WHITE);
     return jCheckBox;
@@ -38,6 +39,8 @@ public class CreateComponent {
     jLabel.setHorizontalAlignment(JLabel.LEFT);
     return jLabel;
   }
+
+
 
   public static Border createTextBorder(String text,int size){
    Border textBorder=BorderFactory.createEtchedBorder();

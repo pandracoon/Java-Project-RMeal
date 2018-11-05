@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class Restaurant {
 
   private String name;
-  private ArrayList<Option> optionArrayList = new ArrayList<Option>();
   private String Location;
+  private ArrayList<Option> optionArrayList = new ArrayList<Option>();
+
 
   public Restaurant(String name,String Location) {
     this.name = name;

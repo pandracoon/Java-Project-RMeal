@@ -1,7 +1,8 @@
 package GUI;
 
 import static GUI.CreateComponent.*;
-import Data.Restaurant;
+
+import Data.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class RMealMainGUI {
 
   static class mainGUI extends JFrame {
 
-    mainGUI(ArrayList<Restaurant> ResList) {
+    mainGUI(ArrayList<Restaurant> resList, OptionList optionList) {
       setTitle("RMeal");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -19,12 +20,12 @@ public class RMealMainGUI {
       container.setBackground(Color.WHITE);
       container.setLayout(null);
 
-      JLabel titleLabel = createJLabel("RMeal",200,150,600,200,120);
+      JLabel titleLabel = createJLabel("RMeal", 200, 150, 600, 200, 120);
       titleLabel.setHorizontalAlignment(JLabel.CENTER);
       titleLabel.setFont(new Font("나눔스퀘어 BOLD", Font.BOLD, 120));
       container.add(titleLabel);
 
-      JButton buttonAdd = createJButton("식당 추가",350,420,300,50,20);
+      JButton buttonAdd = createJButton("식당 추가", 350, 420, 300, 50, 20);
       buttonAdd.setBackground(Color.GRAY);
       buttonAdd.setForeground(Color.WHITE);
       buttonAdd.addActionListener(new ActionListener() {
@@ -32,23 +33,23 @@ public class RMealMainGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
           dispose();
-          new AddGUI(ResList);
+          new AddGUI(resList, optionList);
 
         }
       });
       container.add(buttonAdd);
 
-      JButton buttonSearch =  createJButton("식당 조회",350,490,300,50,20);
+      JButton buttonSearch = createJButton("식당 조회", 350, 490, 300, 50, 20);
       buttonSearch.setBackground(Color.GRAY);
       buttonSearch.setForeground(Color.WHITE);
       container.add(buttonSearch);
 
-      JButton buttonRecommend =  createJButton("식당 추천",350,560,300,50,20);
+      JButton buttonRecommend = createJButton("식당 추천", 350, 560, 300, 50, 20);
       buttonRecommend.setBackground(Color.GRAY);
       buttonRecommend.setForeground(Color.WHITE);
       container.add(buttonRecommend);
 
-      JLabel makerLabel =  createJLabel("made by 조재건",850,710,120,50,15);
+      JLabel makerLabel = createJLabel("made by 조재건", 850, 710, 120, 50, 15);
       makerLabel.setHorizontalAlignment(JLabel.RIGHT);
       container.add(makerLabel);
 
@@ -63,8 +64,9 @@ public class RMealMainGUI {
     //처음 실행일때와 아닐때를 구분해야함. 읽어들일 파일 존재 여부
 
     //처음실행했다고 치고
-    ArrayList<Restaurant> ResList = new ArrayList<Restaurant>();
-    new mainGUI(ResList);
+    ArrayList<Restaurant> resList = new ArrayList<Restaurant>();
+    OptionList optionList = new OptionList();
+    new mainGUI(resList, optionList);
 
   }
 }
