@@ -18,7 +18,7 @@ public class SearchGUI extends JFrame {
   JCheckBox[] numOfPeopleCheckBox;
   JCheckBox[] locationCheckBox;
 
-  SearchGUI(ArrayList<Restaurant> resList, OptionList optionList){
+  SearchGUI(ArrayList<Restaurant> resList, OptionList optionList) {
     setTitle("RMeal");
 
     Container container = this.getContentPane();
@@ -38,34 +38,38 @@ public class SearchGUI extends JFrame {
 
     //////////////////////////////////////////조건입력////////////////////////////////////////
 
-    JPanel optionSetPanel=createJPanel(10,80,560,600);
+    JPanel optionSetPanel = createJPanel(10, 80, 560, 600);
     optionSetPanel.setBackground(Color.WHITE);
-    optionSetPanel.setLayout(new GridLayout(2,2,5,5));
+    optionSetPanel.setLayout(new GridLayout(2, 2, 5, 5));
     container.add(optionSetPanel);
 
-    JPanel typeCheckBoxPanel=new JPanel();
+    JPanel typeCheckBoxPanel = new JPanel();
     typeCheckBoxPanel.setBackground(Color.WHITE);
     typeCheckBoxPanel.setLayout(new GridLayout(0, 1));
     typeCheckBoxPanel.setBorder(createTextBorder("식사", 25));
     optionSetPanel.add(typeCheckBoxPanel);
 
-    JPanel costCheckBoxPanel=new JPanel();
+    JPanel costCheckBoxPanel = new JPanel();
     costCheckBoxPanel.setBackground(Color.WHITE);
     costCheckBoxPanel.setLayout(new GridLayout(0, 1));
     costCheckBoxPanel.setBorder(createTextBorder("가격대", 25));
     optionSetPanel.add(costCheckBoxPanel);
 
-    JPanel numOfPeopleCheckBoxPanel=new JPanel();
+    JPanel numOfPeopleCheckBoxPanel = new JPanel();
     numOfPeopleCheckBoxPanel.setBackground(Color.WHITE);
     numOfPeopleCheckBoxPanel.setLayout(new GridLayout(0, 1));
     numOfPeopleCheckBoxPanel.setBorder(createTextBorder("인원", 25));
     optionSetPanel.add(numOfPeopleCheckBoxPanel);
 
-    JPanel locationCheckBoxPanel=new JPanel();
+    JPanel locationCheckBoxPanel = new JPanel();
     locationCheckBoxPanel.setBackground(Color.WHITE);
+    locationCheckBoxPanel.setSize(280, 1000);
     locationCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    locationCheckBoxPanel.setBorder(createTextBorder("위치", 25));
-    optionSetPanel.add(locationCheckBoxPanel);
+    JScrollPane jScrollPane = new JScrollPane(locationCheckBoxPanel,
+        JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    jScrollPane.setBorder(createTextBorder("위치", 25));
+    jScrollPane.setBackground(Color.WHITE);
+    optionSetPanel.add(jScrollPane);
 
     typeCheckBox = new JCheckBox[optionList.getList(optionList.TYPE).size()];
     for (int i = 0; i < optionList.getList(optionList.TYPE).size(); i++) {
@@ -96,7 +100,7 @@ public class SearchGUI extends JFrame {
 
     ///////////////////////////////////////////버튼///////////////////////////////////////////
 
-    JButton searchButton=createJButton("검색하기", 465, 695, 100, 50, 17);
+    JButton searchButton = createJButton("검색하기", 465, 695, 100, 50, 17);
     searchButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -105,7 +109,7 @@ public class SearchGUI extends JFrame {
     });
     container.add(searchButton);
 
-    JButton backButton=createJButton("돌아가기", 765, 696, 100, 50, 17);
+    JButton backButton = createJButton("돌아가기", 765, 696, 100, 50, 17);
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -119,7 +123,7 @@ public class SearchGUI extends JFrame {
     });
     container.add(backButton);
 
-    JButton showButton=createJButton("정보보기", 875, 695, 100, 50, 17);
+    JButton showButton = createJButton("정보보기", 875, 695, 100, 50, 17);
     showButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -132,16 +136,16 @@ public class SearchGUI extends JFrame {
 
     ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
 
-    resNameList=new String[resList.size()];
-    for (int i = 0; i<resList.size(); i++){
-      resNameList[i]=resList.get(i).getName();
+    resNameList = new String[resList.size()];
+    for (int i = 0; i < resList.size(); i++) {
+      resNameList[i] = resList.get(i).getName();
     }
 
-    JList<String> jList= new JList<String>(resNameList);
+    JList<String> jList = new JList<String>(resNameList);
     jList.setSize(400, 600);
     jList.setLocation(580, 80);
-    jList.setFont(new Font("나눔스퀘어 Bold",Font.BOLD,15));
-    jList.setBorder(createTextBorder("검색 결과",25));
+    jList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 15));
+    jList.setBorder(createTextBorder("검색 결과", 25));
     container.add(jList);
 
     ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
