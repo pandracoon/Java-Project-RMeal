@@ -30,6 +30,7 @@ public class SearchGUI extends JFrame {
     this.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
+
         int choice = JOptionPane.showOptionDialog(container, "RMeal을 종료하시겠습니까?", "RMeal 종료",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
 
@@ -121,12 +122,34 @@ public class SearchGUI extends JFrame {
       resNameList[i] = resList.get(i).getName();
     }
 
-    JList<String> jList = new JList<>(resNameList);
-    jList.setSize(400, 600);
-    jList.setLocation(580, 80);
-    jList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 15));
-    jList.setBorder(createTextBorder("검색 결과", 25));
-    container.add(jList);
+    JList<String> searchResultList = new JList<>(resNameList);//인자로 들어갈 String 배열 다시 생각하기.
+    searchResultList.setSize(400, 600);
+    searchResultList.setLocation(580, 80);
+    searchResultList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 18));
+    searchResultList.setBorder(createTextBorder("검색 결과", 25));
+    container.add(searchResultList);
+
+    searchResultList.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        JList jlist = (JList) e.getSource();
+        if (e.getClickCount() == 2) {
+          Rectangle rectangle = jlist.getCellBounds(0, jlist.getLastVisibleIndex());
+          if (rectangle != null && rectangle.contains(e.getPoint())) {
+            int index = jlist.locationToIndex(e.getPoint());
+            int i = 0;
+            while (true) {
+              if (resNameList[index].equals(resList.get(i).getName())) {
+                new RestaurantInfoGUI(resList.get(i)).setLocationRelativeTo(null);
+                break;
+              }
+              i++;
+            }
+
+          }
+        }
+      }
+    });
 
     ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
 
@@ -161,14 +184,12 @@ public class SearchGUI extends JFrame {
       public void actionPerformed(ActionEvent e) {
         int i = 0;
         while (true) {
-          if (jList.getSelectedValue().equals(resList.get(i).getName())) {
+          if (searchResultList.getSelectedValue().equals(resList.get(i).getName())) {
             new RestaurantInfoGUI(resList.get(i)).setLocationRelativeTo(null);
             break;
           }
           i++;
         }
-
-
       }
     });
     container.add(showButton);
