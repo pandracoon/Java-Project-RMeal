@@ -1,11 +1,20 @@
 package GUI;
 
-import Data.Restaurant;
+import Data.*;
+import java.awt.*;
+import javax.swing.*;
 
-public class RestaurantInfoGUI {
+public class RestaurantInfoGUI extends JFrame {
 
-  public RestaurantInfoGUI(Restaurant restaurant){
+  RestaurantInfoGUI(Restaurant restaurant){
+    setTitle("RMeal");
 
+    Container container = this.getContentPane();
+    container.setBackground(Color.WHITE);
+    container.setLayout(null);
+
+    setSize(500,400);
+    setVisible(true);
   }
 
 }

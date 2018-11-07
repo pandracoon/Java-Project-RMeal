@@ -26,6 +26,22 @@ public class AddGUI extends JFrame {
     container.setBackground(Color.WHITE);
     container.setLayout(null);
 
+    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+    this.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        int choice = JOptionPane.showOptionDialog(container, "RMeal을 종료하시겠습니까?", "RMeal 종료",
+            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+
+        if (choice == 0) {
+          System.exit(1);
+        } else {
+          return;
+        }
+      }
+    });
+
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 추가", 20, 20, 200, 50, 50);
@@ -107,7 +123,7 @@ public class AddGUI extends JFrame {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           dispose();
-          new mainGUI(resList, optionList);
+          new mainGUI(resList, optionList).setLocationRelativeTo(null);
         }
       }
     });
@@ -124,15 +140,13 @@ public class AddGUI extends JFrame {
           return;
         }
         int choice = JOptionPane.showOptionDialog(container, nameTextField.getText() + " 식당을 "
-                + "추가하시겠습니까?", "추가하기",
-            //식당 이름 나오게 세팅해야함
-            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+                + "추가하시겠습니까?", "추가하기", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           resList.add(addRestaurant(optionList));
           JOptionPane
               .showMessageDialog(container, "추가되었습니다!", "추가 성공", JOptionPane.INFORMATION_MESSAGE);
           dispose();
-          new mainGUI(resList, optionList);
+          new mainGUI(resList, optionList).setLocationRelativeTo(null);
         }
       }
     });

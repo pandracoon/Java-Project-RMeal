@@ -10,15 +10,32 @@ import javax.swing.*;
 
 public class RMealMainGUI {
 
-  static class mainGUI extends JFrame {
+   static class mainGUI extends JFrame {
+
+    String[] answer = {"예", "아니오"};
 
     mainGUI(ArrayList<Restaurant> resList, OptionList optionList) {
       setTitle("RMeal");
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
       Container container = this.getContentPane();
       container.setBackground(Color.WHITE);
       container.setLayout(null);
+
+      this.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+          int choice = JOptionPane.showOptionDialog(container, "RMeal을 종료하시겠습니까?", "RMeal 종료",
+              JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+
+          if (choice == 0) {
+            System.exit(1);
+          } else {
+            return;
+          }
+        }
+      });
 
       JLabel titleLabel = createJLabel("RMeal", 200, 150, 600, 200, 120);
       titleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -33,7 +50,7 @@ public class RMealMainGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
           dispose();
-          new AddGUI(resList, optionList);
+          new AddGUI(resList, optionList).setLocationRelativeTo(null);
 
         }
       });
@@ -47,7 +64,7 @@ public class RMealMainGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
           dispose();
-          new SearchGUI(resList, optionList);
+          new SearchGUI(resList, optionList).setLocationRelativeTo(null);
 
         }
       });
@@ -74,7 +91,7 @@ public class RMealMainGUI {
     //처음실행했다고 치고
     ArrayList<Restaurant> resList = new ArrayList<Restaurant>();
     OptionList optionList = new OptionList();
-    new mainGUI(resList, optionList);
+    new mainGUI(resList, optionList).setLocationRelativeTo(null);
 
   }
 }

@@ -25,6 +25,22 @@ public class SearchGUI extends JFrame {
     container.setBackground(Color.WHITE);
     container.setLayout(null);
 
+    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+    this.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        int choice = JOptionPane.showOptionDialog(container, "RMeal을 종료하시겠습니까?", "RMeal 종료",
+            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+
+        if (choice == 0) {
+          System.exit(1);
+        } else {
+          return;
+        }
+      }
+    });
+
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 조회", 20, 20, 200, 50, 50);
@@ -98,6 +114,22 @@ public class SearchGUI extends JFrame {
 
     //////////////////////////////////////////조건입력////////////////////////////////////////
 
+    ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
+
+    resNameList = new String[resList.size()];
+    for (int i = 0; i < resList.size(); i++) {
+      resNameList[i] = resList.get(i).getName();
+    }
+
+    JList<String> jList = new JList<>(resNameList);
+    jList.setSize(400, 600);
+    jList.setLocation(580, 80);
+    jList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 15));
+    jList.setBorder(createTextBorder("검색 결과", 25));
+    container.add(jList);
+
+    ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
+
     ///////////////////////////////////////////버튼///////////////////////////////////////////
 
     JButton searchButton = createJButton("검색하기", 465, 695, 100, 50, 17);
@@ -117,7 +149,7 @@ public class SearchGUI extends JFrame {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           dispose();
-          new mainGUI(resList, optionList);
+          new mainGUI(resList, optionList).setLocationRelativeTo(null);
         }
       }
     });
@@ -127,6 +159,15 @@ public class SearchGUI extends JFrame {
     showButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        int i = 0;
+        while (true) {
+          if (jList.getSelectedValue().equals(resList.get(i).getName())) {
+            new RestaurantInfoGUI(resList.get(i)).setLocationRelativeTo(null);
+            break;
+          }
+          i++;
+        }
+
 
       }
     });
@@ -134,25 +175,8 @@ public class SearchGUI extends JFrame {
 
     ///////////////////////////////////////////버튼///////////////////////////////////////////
 
-    ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
-
-    resNameList = new String[resList.size()];
-    for (int i = 0; i < resList.size(); i++) {
-      resNameList[i] = resList.get(i).getName();
-    }
-
-    JList<String> jList = new JList<String>(resNameList);
-    jList.setSize(400, 600);
-    jList.setLocation(580, 80);
-    jList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 15));
-    jList.setBorder(createTextBorder("검색 결과", 25));
-    container.add(jList);
-
-    ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
-
     setSize(1000, 800);
     setVisible(true);
-
 
   }
 }
