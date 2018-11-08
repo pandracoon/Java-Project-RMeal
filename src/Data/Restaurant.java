@@ -26,5 +26,9 @@ public class Restaurant {
   public String getLocation(){
     return location;
   }
+
+  public ArrayList<Option> getOptionList(){
+    return optionArrayList;
+  }
 }
 

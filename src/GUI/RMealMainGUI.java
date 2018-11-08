@@ -90,7 +90,7 @@ public class RMealMainGUI {
 
     //처음실행했다고 치고
     ArrayList<Restaurant> resList = new ArrayList<Restaurant>();
-    resList.add(new Restaurant("너네집 돈까스","애넘"));
+     resList.add(new Restaurant("너네집 돈까스", "애넘"));
     OptionList optionList = new OptionList();
     new mainGUI(resList, optionList).setLocationRelativeTo(null);
 

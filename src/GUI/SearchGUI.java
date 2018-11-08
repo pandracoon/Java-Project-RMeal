@@ -63,30 +63,31 @@ public class SearchGUI extends JFrame {
     JPanel typeCheckBoxPanel = new JPanel();
     typeCheckBoxPanel.setBackground(Color.WHITE);
     typeCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    typeCheckBoxPanel.setBorder(createTextBorder("식사", 25));
+    typeCheckBoxPanel.setBorder(createTextBorder("식사", 28));
     optionSetPanel.add(typeCheckBoxPanel);
 
     JPanel costCheckBoxPanel = new JPanel();
     costCheckBoxPanel.setBackground(Color.WHITE);
     costCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    costCheckBoxPanel.setBorder(createTextBorder("가격대", 25));
+    costCheckBoxPanel.setBorder(createTextBorder("가격대", 28));
     optionSetPanel.add(costCheckBoxPanel);
 
     JPanel numOfPeopleCheckBoxPanel = new JPanel();
     numOfPeopleCheckBoxPanel.setBackground(Color.WHITE);
     numOfPeopleCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    numOfPeopleCheckBoxPanel.setBorder(createTextBorder("인원", 25));
+    numOfPeopleCheckBoxPanel.setBorder(createTextBorder("인원", 28));
     optionSetPanel.add(numOfPeopleCheckBoxPanel);
 
     JPanel locationCheckBoxPanel = new JPanel();
     locationCheckBoxPanel.setBackground(Color.WHITE);
-    locationCheckBoxPanel.setSize(280, 1000);
+    locationCheckBoxPanel.setSize(400, 1000);
     locationCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    JScrollPane jScrollPane = new JScrollPane(locationCheckBoxPanel,
-        JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    jScrollPane.setBorder(createTextBorder("위치", 25));
-    jScrollPane.setBackground(Color.WHITE);
-    optionSetPanel.add(jScrollPane);
+
+    JScrollPane locationCheckBoxScrollPane = new JScrollPane(locationCheckBoxPanel,
+        JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    locationCheckBoxScrollPane.setBorder(createTextBorder("위치", 28));
+    locationCheckBoxScrollPane.setBackground(Color.WHITE);
+    optionSetPanel.add(locationCheckBoxScrollPane);
 
     typeCheckBox = new JCheckBox[optionList.getList(optionList.TYPE).size()];
     for (int i = 0; i < optionList.getList(optionList.TYPE).size(); i++) {
@@ -123,12 +124,8 @@ public class SearchGUI extends JFrame {
     }
 
     JList<String> searchResultList = new JList<>(resNameList);//인자로 들어갈 String 배열 다시 생각하기.
-    searchResultList.setSize(400, 600);
-    searchResultList.setLocation(580, 80);
-    searchResultList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 18));
-    searchResultList.setBorder(createTextBorder("검색 결과", 25));
-    container.add(searchResultList);
-
+    searchResultList.setBorder(null);
+    searchResultList.setFont(new Font("나눔스퀘어 Bold",Font.BOLD,18));
     searchResultList.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -140,7 +137,7 @@ public class SearchGUI extends JFrame {
             int i = 0;
             while (true) {
               if (resNameList[index].equals(resList.get(i).getName())) {
-                new RestaurantInfoGUI(resList.get(i)).setLocationRelativeTo(null);
+                new RestaurantInfoGUI(resList.get(i),resList).setLocationRelativeTo(null);
                 break;
               }
               i++;
@@ -150,6 +147,18 @@ public class SearchGUI extends JFrame {
         }
       }
     });
+
+    JPanel searchResultListPanel = createJPanel(580, 80, 400, 600);
+    searchResultListPanel.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 18));
+    searchResultListPanel.setBorder(createTextBorder("검색 결과", 28));
+    searchResultListPanel.setLayout(new GridLayout(0, 1));
+    searchResultListPanel.setBackground(Color.WHITE);
+    container.add(searchResultListPanel);
+
+    JScrollPane searchResultListScrollPane = new JScrollPane(searchResultList,
+        JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    searchResultListScrollPane.setBorder(null);
+    searchResultListPanel.add(searchResultListScrollPane);
 
     ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
 
@@ -185,7 +194,7 @@ public class SearchGUI extends JFrame {
         int i = 0;
         while (true) {
           if (searchResultList.getSelectedValue().equals(resList.get(i).getName())) {
-            new RestaurantInfoGUI(resList.get(i)).setLocationRelativeTo(null);
+            new RestaurantInfoGUI(resList.get(i),resList).setLocationRelativeTo(null);
             break;
           }
           i++;
