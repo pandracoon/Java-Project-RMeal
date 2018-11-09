@@ -1,6 +1,6 @@
-package GUI;
+package Main;
 
-import static GUI.CreateComponent.*;
+import static Main.CreateComponent.*;
 
 import Data.*;
 import java.awt.*;

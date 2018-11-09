@@ -1,9 +1,9 @@
-package GUI;
+package Main;
 
-import static GUI.CreateComponent.*;
+import static Main.CreateComponent.*;
 
 import Data.*;
-import GUI.RMealMainGUI.mainGUI;
+import Main.RMealMainGUI.mainGUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class SearchGUI extends JFrame {
   JCheckBox[] costCheckBox;
   JCheckBox[] numOfPeopleCheckBox;
   JCheckBox[] locationCheckBox;
+  SearchGUI searchGUI = this;
 
   SearchGUI(ArrayList<Restaurant> resList, OptionList optionList) {
     setTitle("RMeal");
@@ -137,7 +138,8 @@ public class SearchGUI extends JFrame {
             int i = 0;
             while (true) {
               if (resNameList[index].equals(resList.get(i).getName())) {
-                new RestaurantInfoGUI(resList.get(i),resList).setLocationRelativeTo(null);
+                new RestaurantInfoGUI(resList.get(i), resList, searchGUI, optionList)
+                    .setLocationRelativeTo(null);
                 break;
               }
               i++;
@@ -168,7 +170,9 @@ public class SearchGUI extends JFrame {
     searchButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-
+        boolean[] optionStateList = optionStateList(typeCheckBox, costCheckBox,
+            numOfPeopleCheckBox);
+        //Search기능 구현, 어떻게 reload할 것인가? 아니면 그냥 dispose로 처리할것인가?
       }
     });
     container.add(searchButton);
@@ -194,7 +198,8 @@ public class SearchGUI extends JFrame {
         int i = 0;
         while (true) {
           if (searchResultList.getSelectedValue().equals(resList.get(i).getName())) {
-            new RestaurantInfoGUI(resList.get(i),resList).setLocationRelativeTo(null);
+            new RestaurantInfoGUI(resList.get(i), resList, searchGUI, optionList)
+                .setLocationRelativeTo(null);
             break;
           }
           i++;
@@ -207,6 +212,27 @@ public class SearchGUI extends JFrame {
 
     setSize(1000, 800);
     setVisible(true);
+
+  }
+
+  public boolean[] optionStateList(JCheckBox[] typeCheckBox,
+      JCheckBox[] costCheckBox, JCheckBox[] numOfPeopleCheckBox) {
+
+    boolean[] optionStateList = new boolean[15];
+
+    for (int i = 0; i < typeCheckBox.length; i++) {
+      optionStateList[i] = this.typeCheckBox[i].isSelected();
+    }
+
+    for (int i = 0; i < costCheckBox.length; i++) {
+      optionStateList[i + 5] = this.costCheckBox[i].isSelected();
+    }
+
+    for (int i = 0; i < numOfPeopleCheckBox.length; i++) {
+      optionStateList[i + 10] = this.numOfPeopleCheckBox[i].isSelected();
+    }
+
+    return optionStateList;
 
   }
 }

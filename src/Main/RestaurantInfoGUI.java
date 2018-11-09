@@ -1,18 +1,20 @@
-package GUI;
+package Main;
 
-import static GUI.CreateComponent.*;
+import static Main.CreateComponent.*;
 
 import Data.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.event.*;
+import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 
 public class RestaurantInfoGUI extends JFrame {
 
   String[] answer = {"예", "아니오"};
 
-  RestaurantInfoGUI(Restaurant restaurant, ArrayList<Restaurant> resList) {
+  RestaurantInfoGUI(Restaurant restaurant, ArrayList<Restaurant> resList, SearchGUI searchGUI,
+      OptionList optionList) {
     setTitle("RMeal");
 
     Container container = this.getContentPane();
@@ -69,9 +71,19 @@ public class RestaurantInfoGUI extends JFrame {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           resList.remove(restaurant);
+          for (int i = 0; i < resList.size(); i++) {
+            if (resList.get(i).getLocation().equals(restaurant.getLocation())) {
+              break;
+            }
+            if (i == resList.size() - 1) {
+              optionList.getList(OptionList.LOC).remove(restaurant.getLocation());
+            }
+          }
           JOptionPane.showMessageDialog(container, "삭제되었습니다!", "삭제 성공",
               JOptionPane.INFORMATION_MESSAGE);
+          searchGUI.dispose();
           dispose();
+          new SearchGUI(resList, optionList).setLocationRelativeTo(null);
         }
       }
     });

@@ -1,9 +1,10 @@
-package GUI;
+package Main;
 
-import static GUI.CreateComponent.*;
+import static Data.RestaurantManager.*;
+import static Main.CreateComponent.*;
 
 import Data.*;
-import GUI.RMealMainGUI.mainGUI;
+import Main.RMealMainGUI.mainGUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -140,9 +141,13 @@ public class AddGUI extends JFrame {
           return;
         }
         int choice = JOptionPane.showOptionDialog(container, nameTextField.getText() + " 식당을 "
-                + "추가하시겠습니까?", "추가하기", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+                + "추가하시겠습니까?", "추가하기", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+            answer, answer[0]);
         if (choice == 0) {
-          resList.add(addRestaurant(optionList));
+          boolean[] optionStateList = optionStateList(typeCheckBox, costCheckBox,
+              numOfPeopleCheckBox);
+          resList.add(addRestaurant(optionStateList, optionList, nameTextField.getText(),
+              locationTextField.getText()));
           JOptionPane
               .showMessageDialog(container, "추가되었습니다!", "추가 성공", JOptionPane.INFORMATION_MESSAGE);
           dispose();
@@ -159,30 +164,24 @@ public class AddGUI extends JFrame {
 
   }
 
-  public Restaurant addRestaurant(OptionList optionList) {
+  public boolean[] optionStateList(JCheckBox[] typeCheckBox,
+      JCheckBox[] costCheckBox, JCheckBox[] numOfPeopleCheckBox) {
 
-    Restaurant restaurant = new Restaurant(nameTextField.getText(), locationTextField.getText());
+    boolean[] optionStateList = new boolean[15];
 
     for (int i = 0; i < typeCheckBox.length; i++) {
-      if (this.typeCheckBox[i].isSelected()) {
-        restaurant.addOption(new Option(typeCheckBox[i].getText()));
-      }
+      optionStateList[i] = this.typeCheckBox[i].isSelected();
     }
+
     for (int i = 0; i < costCheckBox.length; i++) {
-      if (this.costCheckBox[i].isSelected()) {
-        restaurant.addOption(new Option(costCheckBox[i].getText()));
-      }
+      optionStateList[i + 5] = this.costCheckBox[i].isSelected();
     }
+
     for (int i = 0; i < numOfPeopleCheckBox.length; i++) {
-      if (this.numOfPeopleCheckBox[i].isSelected()) {
-        restaurant.addOption(new Option(numOfPeopleCheckBox[i].getText()));
-      }
+      optionStateList[i + 10] = this.numOfPeopleCheckBox[i].isSelected();
     }
 
-    if(!optionList.getList(OptionList.LOC).contains(locationTextField.getText())){
-      optionList.getList(OptionList.LOC).add(locationTextField.getText());
-    }
+    return optionStateList;
 
-    return restaurant;
   }
 }
