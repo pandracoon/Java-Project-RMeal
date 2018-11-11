@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class RMealMainGUI {
 
-   static class mainGUI extends JFrame {
+  static class mainGUI extends JFrame {
 
     String[] answer = {"예", "아니오"};
 
@@ -64,7 +64,7 @@ public class RMealMainGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
           dispose();
-          new SearchGUI(resList, optionList).setLocationRelativeTo(null);
+          new SearchGUI(resList, optionList, null, 0).setLocationRelativeTo(null);
 
         }
       });
@@ -90,7 +90,7 @@ public class RMealMainGUI {
 
     //처음실행했다고 치고
     ArrayList<Restaurant> resList = new ArrayList<Restaurant>();
-     resList.add(new Restaurant("너네집 돈까스", "애넘"));
+    resList.add(new Restaurant("너네집 돈까스", "애넘"));
     OptionList optionList = new OptionList();
     new mainGUI(resList, optionList).setLocationRelativeTo(null);
 

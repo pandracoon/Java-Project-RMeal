@@ -40,8 +40,6 @@ public class CreateComponent {
     return jLabel;
   }
 
-
-
   public static Border createTextBorder(String text,int size){
    Border textBorder=BorderFactory.createEtchedBorder();
    textBorder=BorderFactory.createTitledBorder(textBorder,text);

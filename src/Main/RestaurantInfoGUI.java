@@ -7,7 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.event.*;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 
 public class RestaurantInfoGUI extends JFrame {
 
@@ -43,7 +42,7 @@ public class RestaurantInfoGUI extends JFrame {
     String[] resOptionNameList = new String[restaurant.getOptionList().size()];
 
     for (int i = 0; i < restaurant.getOptionList().size(); i++) {
-      resOptionNameList[i] = restaurant.getOptionList().get(i).getOption();
+      resOptionNameList[i] = restaurant.getOptionList().get(i);
     }
 
     JPanel resOptionListPanel = createJPanel(10, 52, 415, 440);
@@ -83,7 +82,7 @@ public class RestaurantInfoGUI extends JFrame {
               JOptionPane.INFORMATION_MESSAGE);
           searchGUI.dispose();
           dispose();
-          new SearchGUI(resList, optionList).setLocationRelativeTo(null);
+          new SearchGUI(resList, optionList, null, 0).setLocationRelativeTo(null);
         }
       }
     });

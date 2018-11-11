@@ -146,8 +146,8 @@ public class AddGUI extends JFrame {
         if (choice == 0) {
           boolean[] optionStateList = optionStateList(typeCheckBox, costCheckBox,
               numOfPeopleCheckBox);
-          resList.add(addRestaurant(optionStateList, optionList, nameTextField.getText(),
-              locationTextField.getText()));
+          addRestaurant(resList, optionStateList, optionList, nameTextField.getText(),
+              locationTextField.getText());
           JOptionPane
               .showMessageDialog(container, "추가되었습니다!", "추가 성공", JOptionPane.INFORMATION_MESSAGE);
           dispose();

@@ -1,5 +1,6 @@
 package Main;
 
+import static Data.RestaurantManager.*;
 import static Main.CreateComponent.*;
 
 import Data.*;
@@ -12,14 +13,19 @@ import javax.swing.*;
 public class SearchGUI extends JFrame {
 
   String[] answer = {"예", "아니오"};
-  String[] resNameList;
+  String[] searchResultNameList;
   JCheckBox[] typeCheckBox;
   JCheckBox[] costCheckBox;
   JCheckBox[] numOfPeopleCheckBox;
   JCheckBox[] locationCheckBox;
   SearchGUI searchGUI = this;
+  JList<String> searchResultList;
 
-  SearchGUI(ArrayList<Restaurant> resList, OptionList optionList) {
+  public static final int INITIAL_STATE = 0;
+  public static final int SEARCHED_STATE = 1;
+
+  SearchGUI(ArrayList<Restaurant> resList, OptionList optionList, boolean[] optionStateList,
+      int state) {
     setTitle("RMeal");
 
     Container container = this.getContentPane();
@@ -119,14 +125,22 @@ public class SearchGUI extends JFrame {
 
     ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
 
-    resNameList = new String[resList.size()];
+    String[] resNameList = new String[resList.size()];
     for (int i = 0; i < resList.size(); i++) {
       resNameList[i] = resList.get(i).getName();
     }
 
-    JList<String> searchResultList = new JList<>(resNameList);//인자로 들어갈 String 배열 다시 생각하기.
+    if (state == INITIAL_STATE) {
+      searchResultNameList = resNameList;
+
+    }
+    if (state == SEARCHED_STATE) {
+      searchResultNameList = searchRestaurant(resList, optionList, optionStateList);
+    }
+
+    searchResultList = new JList<>(searchResultNameList);//인자로 들어갈 String 배열 다시 생각하기.
     searchResultList.setBorder(null);
-    searchResultList.setFont(new Font("나눔스퀘어 Bold",Font.BOLD,18));
+    searchResultList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 18));
     searchResultList.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -137,7 +151,7 @@ public class SearchGUI extends JFrame {
             int index = jlist.locationToIndex(e.getPoint());
             int i = 0;
             while (true) {
-              if (resNameList[index].equals(resList.get(i).getName())) {
+              if (searchResultNameList[index].equals(resList.get(i).getName())) {
                 new RestaurantInfoGUI(resList.get(i), resList, searchGUI, optionList)
                     .setLocationRelativeTo(null);
                 break;
@@ -172,7 +186,9 @@ public class SearchGUI extends JFrame {
       public void actionPerformed(ActionEvent e) {
         boolean[] optionStateList = optionStateList(typeCheckBox, costCheckBox,
             numOfPeopleCheckBox);
-        //Search기능 구현, 어떻게 reload할 것인가? 아니면 그냥 dispose로 처리할것인가?
+        dispose();
+        new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
+            .setLocationRelativeTo(null);
       }
     });
     container.add(searchButton);

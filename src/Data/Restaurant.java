@@ -6,7 +6,7 @@ public class Restaurant {
 
   private String name;
   private String location;
-  private ArrayList<Option> optionArrayList = new ArrayList<Option>();
+  private ArrayList<String> optionArrayList = new ArrayList<String>();
 
 
   public Restaurant(String name, String location) {
@@ -14,7 +14,7 @@ public class Restaurant {
     this.location = location;
   }
 
-  public void addOption(Option option) {
+  public void addOption(String option) {
     optionArrayList.add(option);
 
   }
@@ -27,7 +27,7 @@ public class Restaurant {
     return location;
   }
 
-  public ArrayList<Option> getOptionList(){
+  public ArrayList<String> getOptionList() {
     return optionArrayList;
   }
 }
