@@ -144,8 +144,7 @@ public class AddGUI extends JFrame {
                 + "추가하시겠습니까?", "추가하기", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
             answer, answer[0]);
         if (choice == 0) {
-          boolean[] optionStateList = optionStateList(typeCheckBox, costCheckBox,
-              numOfPeopleCheckBox);
+          ArrayList<Boolean> optionStateList = optionStateList();
           addRestaurant(resList, optionStateList, optionList, nameTextField.getText(),
               locationTextField.getText());
           JOptionPane
@@ -164,21 +163,20 @@ public class AddGUI extends JFrame {
 
   }
 
-  public boolean[] optionStateList(JCheckBox[] typeCheckBox,
-      JCheckBox[] costCheckBox, JCheckBox[] numOfPeopleCheckBox) {
+  public ArrayList<Boolean> optionStateList() {
 
-    boolean[] optionStateList = new boolean[15];
+    ArrayList<Boolean> optionStateList = new ArrayList<Boolean>();
 
     for (int i = 0; i < typeCheckBox.length; i++) {
-      optionStateList[i] = this.typeCheckBox[i].isSelected();
+      optionStateList.add(this.typeCheckBox[i].isSelected());
     }
 
     for (int i = 0; i < costCheckBox.length; i++) {
-      optionStateList[i + 5] = this.costCheckBox[i].isSelected();
+      optionStateList.add(this.costCheckBox[i].isSelected());
     }
 
     for (int i = 0; i < numOfPeopleCheckBox.length; i++) {
-      optionStateList[i + 10] = this.numOfPeopleCheckBox[i].isSelected();
+      optionStateList.add(this.numOfPeopleCheckBox[i].isSelected());
     }
 
     return optionStateList;

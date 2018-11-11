@@ -21,6 +21,15 @@ public class CreateComponent {
     return jCheckBox;
   }
 
+  public static JCheckBox createJCheckBox(String text, int width, int height, int size,
+      boolean state) {
+    JCheckBox jCheckBox = new JCheckBox(text, state);
+    jCheckBox.setSize(width, height);
+    jCheckBox.setFont(new Font("나눔스퀘어 BOLD", Font.BOLD, size));
+    jCheckBox.setBackground(Color.WHITE);
+    return jCheckBox;
+  }
+
   public static JButton createJButton(String text, int x, int y, int width, int height,
       int size) {
     JButton jButton = new JButton(text);
