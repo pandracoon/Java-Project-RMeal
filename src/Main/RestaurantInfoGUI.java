@@ -13,8 +13,8 @@ public class RestaurantInfoGUI extends JFrame {
   String[] answer = {"예", "아니오"};
 
   RestaurantInfoGUI(Restaurant restaurant, ArrayList<Restaurant> resList, SearchGUI searchGUI,
-      OptionList optionList) {
-    setTitle("RMeal");
+      OptionList optionList, ArrayList<Boolean> optionStateList) {
+    setTitle(restaurant.getName());
 
     Container container = this.getContentPane();
     container.setBackground(Color.WHITE);
@@ -60,6 +60,13 @@ public class RestaurantInfoGUI extends JFrame {
     /////////////////////////////////////버튼/////////////////////////////////////////////
 
     JButton modifyButton = createJButton("수정하기", 60, 502, 100, 50, 17);
+    modifyButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList)
+            .setLocationRelativeTo(null);
+      }
+    });
     container.add(modifyButton);
 
     JButton deleteButton = createJButton("삭제하기", 170, 502, 100, 50, 17);
@@ -82,7 +89,8 @@ public class RestaurantInfoGUI extends JFrame {
               JOptionPane.INFORMATION_MESSAGE);
           searchGUI.dispose();
           dispose();
-          new SearchGUI(resList, optionList, null, 0).setLocationRelativeTo(null);
+          new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
+              .setLocationRelativeTo(null);
         }
       }
     });

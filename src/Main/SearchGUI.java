@@ -185,7 +185,8 @@ public class SearchGUI extends JFrame {
             int i = 0;
             while (true) {
               if (searchResultNameList[index].equals(resList.get(i).getName())) {
-                new RestaurantInfoGUI(resList.get(i), resList, searchGUI, optionList)
+                new RestaurantInfoGUI(resList.get(i), resList, searchGUI, optionList,
+                    optionStateList)
                     .setLocationRelativeTo(null);
                 break;
               }
@@ -246,7 +247,7 @@ public class SearchGUI extends JFrame {
         int i = 0;
         while (true) {
           if (searchResultList.getSelectedValue().equals(resList.get(i).getName())) {
-            new RestaurantInfoGUI(resList.get(i), resList, searchGUI, optionList)
+            new RestaurantInfoGUI(resList.get(i), resList, searchGUI, optionList, optionStateList)
                 .setLocationRelativeTo(null);
             break;
           }

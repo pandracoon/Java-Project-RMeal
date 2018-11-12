@@ -42,10 +42,10 @@ public class RMealMainGUI {
       titleLabel.setFont(new Font("나눔스퀘어 BOLD", Font.BOLD, 120));
       container.add(titleLabel);
 
-      JButton buttonAdd = createJButton("식당 추가", 350, 420, 300, 50, 20);
-      buttonAdd.setBackground(Color.GRAY);
-      buttonAdd.setForeground(Color.WHITE);
-      buttonAdd.addActionListener(new ActionListener() {
+      JButton addButton = createJButton("식당 추가", 350, 420, 300, 50, 20);
+      addButton.setBackground(Color.GRAY);
+      addButton.setForeground(Color.WHITE);
+      addButton.addActionListener(new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -54,12 +54,12 @@ public class RMealMainGUI {
 
         }
       });
-      container.add(buttonAdd);
+      container.add(addButton);
 
-      JButton buttonSearch = createJButton("식당 조회", 350, 490, 300, 50, 20);
-      buttonSearch.setBackground(Color.GRAY);
-      buttonSearch.setForeground(Color.WHITE);
-      buttonSearch.addActionListener(new ActionListener() {
+      JButton searchButton = createJButton("식당 조회", 350, 490, 300, 50, 20);
+      searchButton.setBackground(Color.GRAY);
+      searchButton.setForeground(Color.WHITE);
+      searchButton.addActionListener(new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -68,12 +68,12 @@ public class RMealMainGUI {
 
         }
       });
-      container.add(buttonSearch);
+      container.add(searchButton);
 
-      JButton buttonRecommend = createJButton("식당 추천", 350, 560, 300, 50, 20);
-      buttonRecommend.setBackground(Color.GRAY);
-      buttonRecommend.setForeground(Color.WHITE);
-      container.add(buttonRecommend);
+      JButton recommendButton = createJButton("식당 추천", 350, 560, 300, 50, 20);
+      recommendButton.setBackground(Color.GRAY);
+      recommendButton.setForeground(Color.WHITE);
+      container.add(recommendButton);
 
       JLabel makerLabel = createJLabel("made by 조재건", 850, 710, 120, 50, 15);
       makerLabel.setHorizontalAlignment(JLabel.RIGHT);
