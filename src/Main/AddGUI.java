@@ -5,6 +5,7 @@ import static Main.CreateComponent.*;
 
 import Data.*;
 import Main.RMealMainGUI.mainGUI;
+import com.sun.org.apache.regexp.internal.RESyntaxException;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -114,7 +115,7 @@ public class AddGUI extends JFrame {
 
     //////////////////////////////////////////특성 입력///////////////////////////////////////
 
-    ///////////////////////////////////추가하기 돌아가기 버튼///////////////////////////////////
+    //////////////////////////////////////////버튼///////////////////////////////////////////
 
     JButton backButton = createJButton("돌아가기", 765, 696, 100, 50, 17);
     backButton.addActionListener(new ActionListener() {
@@ -145,8 +146,13 @@ public class AddGUI extends JFrame {
             answer, answer[0]);
         if (choice == 0) {
           ArrayList<Boolean> optionStateList = optionStateList();
-          addRestaurant(resList, optionStateList, optionList, nameTextField.getText(),
+          Restaurant addedRestaurant = addRestaurant(container, resList, optionStateList,
+              optionList,
+              nameTextField.getText(),
               locationTextField.getText());
+          if (addedRestaurant == null) {
+            return;
+          }
           JOptionPane
               .showMessageDialog(container, "추가되었습니다!", "추가 성공", JOptionPane.INFORMATION_MESSAGE);
           dispose();
@@ -156,7 +162,7 @@ public class AddGUI extends JFrame {
     });
     container.add(addButton);
 
-    ///////////////////////////////////추가하기 돌아가기 버튼///////////////////////////////////
+    //////////////////////////////////////////////버튼/////////////////////////////////////////////
 
     setSize(1000, 800);
     setVisible(true);

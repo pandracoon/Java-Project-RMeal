@@ -1,14 +1,16 @@
 package Main;
 
+import static Data.RestaurantManager.*;
+import static Data.RestaurantManager.modifyRestaurant;
 import static Main.CreateComponent.*;
 
-import Data.OptionList;
-import Data.Restaurant;
-import com.sun.org.apache.regexp.internal.RESyntaxException;
+import Data.*;
+import Main.RMealMainGUI.mainGUI;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.text.html.Option;
+
 
 public class ModifyRestaurantInfoGUI extends JFrame {
 
@@ -19,7 +21,8 @@ public class ModifyRestaurantInfoGUI extends JFrame {
   ArrayList<Boolean> resOptionState;
 
   public ModifyRestaurantInfoGUI(Restaurant restaurant, OptionList optionList,
-      ArrayList<Boolean> optionStateList) {
+      ArrayList<Boolean> optionStateList, ArrayList<Restaurant> resList, SearchGUI searchGUI,
+      RestaurantInfoGUI restaurantInfoGUI) {
     setTitle(restaurant.getName());
 
     Container container = this.getContentPane();
@@ -42,7 +45,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     nameTextAreaPanel.setBorder(createTextBorder("이름", 25));
     container.add(nameTextAreaPanel);
 
-    JTextField nameTextField = new JTextField();
+    JTextField nameTextField = new JTextField(restaurant.getName());
     nameTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
     nameTextAreaPanel.add(nameTextField);
 
@@ -52,7 +55,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     locationTextAreaPanel.setBorder(createTextBorder("위치", 25));
     container.add(locationTextAreaPanel);
 
-    JTextField locationTextField = new JTextField();
+    JTextField locationTextField = new JTextField(restaurant.getLocation());
     locationTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
     locationTextAreaPanel.add(locationTextField);
 
@@ -102,6 +105,60 @@ public class ModifyRestaurantInfoGUI extends JFrame {
 
     ////////////////////////////////////////정보 수정///////////////////////////////////////////
 
+    /////////////////////////////////////////버튼//////////////////////////////////////////////
+
+    JButton backButton = createJButton("돌아가기", 765, 696, 100, 50, 17);
+    backButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        int choice = JOptionPane.showOptionDialog(container, "수정하지 않고 돌아가시겠습니까?", "돌아가기",
+            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+        if (choice == 0) {
+          dispose();
+        }
+      }
+    });
+    container.add(backButton);
+
+    JButton addButton = createJButton("수정하기", 875, 695, 100, 50, 17);
+    addButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (nameTextField.getText().equals("") || locationTextField.getText().equals("")) {
+          JOptionPane
+              .showMessageDialog(container, "이름과 위치를 적어주세요.", "수정 실패",
+                  JOptionPane.INFORMATION_MESSAGE);
+          return;
+        }
+        int choice = JOptionPane
+            .showOptionDialog(container, "수정하시겠습니까?", "수정하기", JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+        if (choice == 0) {
+          ArrayList<Boolean> modifyOptionStateList = optionStateList();
+          Restaurant modifiedRestaurant = modifyRestaurant(restaurant, optionList, resList,
+              modifyOptionStateList, nameTextField.getText(), locationTextField.getText(),
+              container);
+          if (modifiedRestaurant == null) {
+            return;
+          }
+          JOptionPane
+              .showMessageDialog(container, "수정되었습니다!", "수정 성공",
+                  JOptionPane.INFORMATION_MESSAGE);
+          dispose();
+          restaurantInfoGUI.dispose();
+          searchGUI.dispose();
+          new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
+              .setLocationRelativeTo(null);
+          new RestaurantInfoGUI(modifiedRestaurant, resList, optionList, optionStateList,
+              searchGUI).setLocationRelativeTo(null);
+
+        }
+      }
+    });
+    container.add(addButton);
+
+    /////////////////////////////////////////버튼//////////////////////////////////////////////
+
     setSize(1000, 800);
     setVisible(true);
   }
@@ -114,4 +171,23 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     return false;
   }
 
+  public ArrayList<Boolean> optionStateList() {
+
+    ArrayList<Boolean> optionStateList = new ArrayList<Boolean>();
+
+    for (int i = 0; i < typeCheckBox.length; i++) {
+      optionStateList.add(this.typeCheckBox[i].isSelected());
+    }
+
+    for (int i = 0; i < costCheckBox.length; i++) {
+      optionStateList.add(this.costCheckBox[i].isSelected());
+    }
+
+    for (int i = 0; i < numOfPeopleCheckBox.length; i++) {
+      optionStateList.add(this.numOfPeopleCheckBox[i].isSelected());
+    }
+
+    return optionStateList;
+
+  }
 }

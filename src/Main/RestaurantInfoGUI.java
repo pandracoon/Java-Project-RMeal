@@ -1,5 +1,6 @@
 package Main;
 
+import static Data.RestaurantManager.deleteRestaurant;
 import static Main.CreateComponent.*;
 
 import Data.*;
@@ -8,17 +9,26 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.event.*;
 
+
 public class RestaurantInfoGUI extends JFrame {
 
   String[] answer = {"예", "아니오"};
+  ArrayList<Restaurant> resList;
+  OptionList optionList;
+  ArrayList<Boolean> optionStateList;
+  RestaurantInfoGUI restaurantInfoGUI = this;
 
-  RestaurantInfoGUI(Restaurant restaurant, ArrayList<Restaurant> resList, SearchGUI searchGUI,
-      OptionList optionList, ArrayList<Boolean> optionStateList) {
+  RestaurantInfoGUI(Restaurant restaurant, ArrayList<Restaurant> resList,
+      OptionList optionList, ArrayList<Boolean> optionStateList, SearchGUI searchGUI) {
     setTitle(restaurant.getName());
 
     Container container = this.getContentPane();
     container.setBackground(Color.WHITE);
     container.setLayout(null);
+
+    this.resList = resList;
+    this.optionStateList = optionStateList;
+    this.optionList = optionList;
 
     //////////////////////////////////////정보////////////////////////////////////////////
 
@@ -63,8 +73,8 @@ public class RestaurantInfoGUI extends JFrame {
     modifyButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList)
-            .setLocationRelativeTo(null);
+        new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList, resList, searchGUI,
+            restaurantInfoGUI).setLocationRelativeTo(null);
       }
     });
     container.add(modifyButton);
@@ -76,19 +86,11 @@ public class RestaurantInfoGUI extends JFrame {
         int choice = JOptionPane.showOptionDialog(container, "식당을 삭제하시겠습니까?", "식당 삭제",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
-          resList.remove(restaurant);
-          for (int i = 0; i < resList.size(); i++) {
-            if (resList.get(i).getLocation().equals(restaurant.getLocation())) {
-              break;
-            }
-            if (i == resList.size() - 1) {
-              optionList.getList(OptionList.LOC).remove(restaurant.getLocation());
-            }
-          }
+          deleteRestaurant(restaurant, resList, optionList);
           JOptionPane.showMessageDialog(container, "삭제되었습니다!", "삭제 성공",
               JOptionPane.INFORMATION_MESSAGE);
-          searchGUI.dispose();
           dispose();
+          searchGUI.dispose();
           new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
               .setLocationRelativeTo(null);
         }
@@ -109,6 +111,10 @@ public class RestaurantInfoGUI extends JFrame {
 
     setSize(452, 612);
     setVisible(true);
+  }
+
+  public void makeSearchGUI() {
+    new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE);
   }
 }
 

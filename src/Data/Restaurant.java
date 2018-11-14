@@ -16,19 +16,26 @@ public class Restaurant {
 
   public void addOption(String option) {
     optionArrayList.add(option);
-
   }
 
   public String getName() {
     return name;
   }
 
-  public String getLocation(){
+  public String getLocation() {
     return location;
   }
 
   public ArrayList<String> getOptionList() {
     return optionArrayList;
+  }
+
+  public void modifyName(String name) {
+    this.name = name;
+  }
+
+  public void modifyLocation(String location) {
+    this.location = location;
   }
 }
 

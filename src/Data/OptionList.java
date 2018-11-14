@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class OptionList {
 
-  public static final int TYPE = 1;
-  public static final int COST = 2;
-  public static final int NUM = 3;
-  public static final int LOC = 4;
+  public static final int TYPE = 0;
+  public static final int COST = 1;
+  public static final int NUM = 2;
+  public static final int LOC = 3;
 
   private ArrayList<String> typeList = new ArrayList<String>();
 
