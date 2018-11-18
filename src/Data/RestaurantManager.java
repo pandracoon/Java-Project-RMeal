@@ -1,5 +1,6 @@
 package Data;
 
+import Main.RecommendGUI;
 import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -109,6 +110,14 @@ public class RestaurantManager {
     deleteRestaurant(restaurant, resList, optionList);
 
     return addRestaurant(container, resList, optionStateList, optionList, name, location);
+  }
+
+  public static String recommendRestaurant(ArrayList<Restaurant> resList, OptionList optionList,
+      ArrayList<Boolean> optionStateList) {
+    String[] searchResultNameList = searchRestaurant(resList, optionList, optionStateList);
+    int recommendIndex = (int) (Math.random() * searchResultNameList.length);
+    return searchResultNameList[recommendIndex];
+
   }
 
 

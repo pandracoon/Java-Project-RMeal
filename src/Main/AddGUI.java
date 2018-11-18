@@ -5,7 +5,6 @@ import static Main.CreateComponent.*;
 
 import Data.*;
 import Main.RMealMainGUI.mainGUI;
-import com.sun.org.apache.regexp.internal.RESyntaxException;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -145,7 +144,7 @@ public class AddGUI extends JFrame {
                 + "추가하시겠습니까?", "추가하기", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
             answer, answer[0]);
         if (choice == 0) {
-          ArrayList<Boolean> optionStateList = optionStateList();
+          ArrayList<Boolean> optionStateList = getOptionStateList();
           Restaurant addedRestaurant = addRestaurant(container, resList, optionStateList,
               optionList,
               nameTextField.getText(),
@@ -169,7 +168,7 @@ public class AddGUI extends JFrame {
 
   }
 
-  public ArrayList<Boolean> optionStateList() {
+  public ArrayList<Boolean> getOptionStateList() {
 
     ArrayList<Boolean> optionStateList = new ArrayList<Boolean>();
 

@@ -185,9 +185,9 @@ public class SearchGUI extends JFrame {
             int i = 0;
             while (true) {
               if (searchResultNameList[index].equals(resList.get(i).getName())) {
-                ArrayList<Boolean> optionStateList = optionStateList();
+                ArrayList<Boolean> optionStateList = getOptionStateList();
                 new RestaurantInfoGUI(resList.get(i), resList, optionList,
-                    optionStateList, searchGUI)
+                    optionStateList, searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI)
                     .setLocationRelativeTo(null);
                 break;
               }
@@ -219,7 +219,7 @@ public class SearchGUI extends JFrame {
     searchButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ArrayList<Boolean> optionStateList = optionStateList();
+        ArrayList<Boolean> optionStateList = getOptionStateList();
         dispose();
         new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
             .setLocationRelativeTo(null);
@@ -227,7 +227,7 @@ public class SearchGUI extends JFrame {
     });
     container.add(searchButton);
 
-    JButton backButton = createJButton("돌아가기", 765, 696, 100, 50, 17);
+    JButton backButton = createJButton("돌아가기", 765, 695, 100, 50, 17);
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -248,9 +248,9 @@ public class SearchGUI extends JFrame {
         int i = 0;
         while (true) {
           if (searchResultList.getSelectedValue().equals(resList.get(i).getName())) {
-            ArrayList<Boolean> optionStateList = optionStateList();
-            new RestaurantInfoGUI(resList.get(i), resList, optionList, optionStateList, searchGUI)
-                .setLocationRelativeTo(null);
+            ArrayList<Boolean> optionStateList = getOptionStateList();
+            new RestaurantInfoGUI(resList.get(i), resList, optionList, optionStateList, searchGUI
+                , RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
             break;
           }
           i++;
@@ -266,7 +266,7 @@ public class SearchGUI extends JFrame {
 
   }
 
-  public ArrayList<Boolean> optionStateList() {
+  public ArrayList<Boolean> getOptionStateList() {
 
     ArrayList<Boolean> optionStateList = new ArrayList<Boolean>();
 

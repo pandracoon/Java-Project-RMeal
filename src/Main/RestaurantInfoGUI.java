@@ -12,6 +12,9 @@ import java.awt.event.*;
 
 public class RestaurantInfoGUI extends JFrame {
 
+  public static final int FROM_SEARCHGUI = 0;
+  public static final int FROM_RECOMMENDGUI = 1;
+
   String[] answer = {"예", "아니오"};
   ArrayList<Restaurant> resList;
   OptionList optionList;
@@ -19,7 +22,7 @@ public class RestaurantInfoGUI extends JFrame {
   RestaurantInfoGUI restaurantInfoGUI = this;
 
   RestaurantInfoGUI(Restaurant restaurant, ArrayList<Restaurant> resList,
-      OptionList optionList, ArrayList<Boolean> optionStateList, SearchGUI searchGUI) {
+      OptionList optionList, ArrayList<Boolean> optionStateList, SearchGUI searchGUI, int state) {
     setTitle(restaurant.getName());
 
     Container container = this.getContentPane();
@@ -69,43 +72,56 @@ public class RestaurantInfoGUI extends JFrame {
 
     /////////////////////////////////////버튼/////////////////////////////////////////////
 
-    JButton modifyButton = createJButton("수정하기", 60, 502, 100, 50, 17);
-    modifyButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList, resList, searchGUI,
-            restaurantInfoGUI).setLocationRelativeTo(null);
-      }
-    });
-    container.add(modifyButton);
-
-    JButton deleteButton = createJButton("삭제하기", 170, 502, 100, 50, 17);
-    deleteButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(container, "식당을 삭제하시겠습니까?", "식당 삭제",
-            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
-        if (choice == 0) {
-          deleteRestaurant(restaurant, resList, optionList);
-          JOptionPane.showMessageDialog(container, "삭제되었습니다!", "삭제 성공",
-              JOptionPane.INFORMATION_MESSAGE);
-          dispose();
-          searchGUI.dispose();
-          new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
-              .setLocationRelativeTo(null);
+    if (state == FROM_SEARCHGUI) {
+      JButton modifyButton = createJButton("수정하기", 60, 502, 100, 50, 17);
+      modifyButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList, resList, searchGUI,
+              restaurantInfoGUI).setLocationRelativeTo(null);
         }
-      }
-    });
-    container.add(deleteButton);
+      });
+      container.add(modifyButton);
 
-    JButton backButton = createJButton("돌아가기", 280, 502, 100, 50, 17);
-    backButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        dispose();
-      }
-    });
-    container.add(backButton);
+      JButton deleteButton = createJButton("삭제하기", 170, 502, 100, 50, 17);
+      deleteButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          int choice = JOptionPane.showOptionDialog(container, "식당을 삭제하시겠습니까?", "식당 삭제",
+              JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+          if (choice == 0) {
+            deleteRestaurant(restaurant, resList, optionList);
+            JOptionPane.showMessageDialog(container, "삭제되었습니다!", "삭제 성공",
+                JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            searchGUI.dispose();
+            new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
+                .setLocationRelativeTo(null);
+          }
+        }
+      });
+      container.add(deleteButton);
+
+      JButton backButton = createJButton("돌아가기", 280, 502, 100, 50, 17);
+      backButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          dispose();
+        }
+      });
+      container.add(backButton);
+    }
+
+    if (state == FROM_RECOMMENDGUI) {
+      JButton backButton = createJButton("돌아가기", 320, 502, 100, 50, 17);
+      backButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          dispose();
+        }
+      });
+      container.add(backButton);
+    }
 
     /////////////////////////////////////버튼///////////////////////////////////////////
 
@@ -113,9 +129,6 @@ public class RestaurantInfoGUI extends JFrame {
     setVisible(true);
   }
 
-  public void makeSearchGUI() {
-    new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE);
-  }
 }
 
 

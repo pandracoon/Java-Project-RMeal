@@ -150,7 +150,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
           new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
               .setLocationRelativeTo(null);
           new RestaurantInfoGUI(modifiedRestaurant, resList, optionList, optionStateList,
-              searchGUI).setLocationRelativeTo(null);
+              searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
 
         }
       }

@@ -5,6 +5,7 @@ import static Main.CreateComponent.*;
 import Data.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -73,6 +74,14 @@ public class RMealMainGUI {
       JButton recommendButton = createJButton("식당 추천", 350, 560, 300, 50, 20);
       recommendButton.setBackground(Color.GRAY);
       recommendButton.setForeground(Color.WHITE);
+      recommendButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          dispose();
+          new RecommendGUI(resList, optionList, null, RecommendGUI.INITIAL_STATE)
+              .setLocationRelativeTo(null);
+        }
+      });
       container.add(recommendButton);
 
       JLabel makerLabel = createJLabel("made by 조재건", 850, 710, 120, 50, 15);
