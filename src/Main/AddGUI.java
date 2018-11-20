@@ -19,7 +19,7 @@ public class AddGUI extends JFrame {
   JTextField nameTextField;
   JTextField locationTextField;
 
-  AddGUI(ArrayList<Restaurant> resList, OptionList optionList) {
+  AddGUI(RestaurantList restaurantList, OptionList optionList) {
 
     setTitle("RMeal");
 
@@ -124,7 +124,7 @@ public class AddGUI extends JFrame {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           dispose();
-          new mainGUI(resList, optionList).setLocationRelativeTo(null);
+          new mainGUI(restaurantList, optionList).setLocationRelativeTo(null);
         }
       }
     });
@@ -145,7 +145,7 @@ public class AddGUI extends JFrame {
             answer, answer[0]);
         if (choice == 0) {
           ArrayList<Boolean> optionStateList = getOptionStateList();
-          Restaurant addedRestaurant = addRestaurant(container, resList, optionStateList,
+          Restaurant addedRestaurant = addRestaurant(container, restaurantList, optionStateList,
               optionList,
               nameTextField.getText(),
               locationTextField.getText());
@@ -155,7 +155,7 @@ public class AddGUI extends JFrame {
           JOptionPane
               .showMessageDialog(container, "추가되었습니다!", "추가 성공", JOptionPane.INFORMATION_MESSAGE);
           dispose();
-          new mainGUI(resList, optionList).setLocationRelativeTo(null);
+          new mainGUI(restaurantList, optionList).setLocationRelativeTo(null);
         }
       }
     });

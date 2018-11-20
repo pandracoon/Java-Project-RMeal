@@ -1,6 +1,5 @@
 package Data;
 
-import Main.RecommendGUI;
 import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -9,7 +8,7 @@ public class RestaurantManager {
 
   public static final int CLEAR = -1;
 
-  public static Restaurant addRestaurant(Container container, ArrayList<Restaurant> resList,
+  public static Restaurant addRestaurant(Container container, RestaurantList restaurantList,
       ArrayList<Boolean> optionStateList, OptionList optionList, String name, String location) {
 
     Restaurant restaurant = new Restaurant(name, location);
@@ -37,27 +36,27 @@ public class RestaurantManager {
     }
 
     String[] answer = {"예", "아니오"};
-    int deleteIndex = isNameContained(restaurant, name, resList);
+    int deleteIndex = isNameContained(restaurant, name, restaurantList);
 
     if (deleteIndex != RestaurantManager.CLEAR) {
       int choice = JOptionPane.showOptionDialog(container, "일치하는 이름을 가진 식당이 있습니다.\n 기존 "
               + "식당을 삭제하고 수정하시겠습니까?", "경고", JOptionPane.YES_NO_OPTION,
           JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
       if (choice == 0) {
-        deleteRestaurant(resList.get(deleteIndex), resList, optionList);
+        deleteRestaurant(restaurantList.get(deleteIndex), restaurantList, optionList);
       } else {
         return null;
       }
     }
 
-    resList.add(restaurant);
+    restaurantList.add(restaurant);
 
     return restaurant;
   }
 
-  public static String[] searchRestaurant(ArrayList<Restaurant> resList, OptionList optionList,
+  public static String[] searchRestaurant(RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList) {
-    ArrayList<Restaurant> filteredList = new ArrayList<Restaurant>(resList);
+    RestaurantList filteredList = (RestaurantList) restaurantList.clone();
 
     filteredList = filterList(optionList.getList(OptionList.TYPE), filteredList,
         optionStateList, OptionList.TYPE);
@@ -76,14 +75,14 @@ public class RestaurantManager {
     return searchResultNameList;
   }
 
-  public static void deleteRestaurant(Restaurant restaurant, ArrayList<Restaurant> resList,
+  public static void deleteRestaurant(Restaurant restaurant, RestaurantList restaurantList,
       OptionList optionList) {
-    resList.remove(restaurant);
-    for (int i = 0; i < resList.size(); i++) {
-      if (resList.get(i).getLocation().equals(restaurant.getLocation())) {
+    restaurantList.remove(restaurant);
+    for (int i = 0; i < restaurantList.size(); i++) {
+      if (restaurantList.get(i).getLocation().equals(restaurant.getLocation())) {
         break;
       }
-      if (i == resList.size() - 1) {
+      if (i == restaurantList.size() - 1) {
         optionList.getList(OptionList.LOC).remove(restaurant.getLocation());
       }
     }
@@ -91,69 +90,73 @@ public class RestaurantManager {
   }
 
   public static Restaurant modifyRestaurant(Restaurant restaurant, OptionList optionList,
-      ArrayList<Restaurant> resList, ArrayList<Boolean> optionStateList, String name,
+      RestaurantList restaurantList, ArrayList<Boolean> optionStateList, String name,
       String location, Container container) {
 
     String[] answer = {"예", "아니오"};
-    int deleteIndex = isNameContained(restaurant, name, resList);
+    int deleteIndex = isNameContained(restaurant, name, restaurantList);
 
     if (deleteIndex != RestaurantManager.CLEAR) {
       int choice = JOptionPane.showOptionDialog(container, "일치하는 이름을 가진 식당이 있습니다.\n 기존 "
               + "식당을 삭제하고 수정하시겠습니까?", "경고", JOptionPane.YES_NO_OPTION,
           JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
       if (choice == 0) {
-        deleteRestaurant(resList.get(deleteIndex), resList, optionList);
+        deleteRestaurant(restaurantList.get(deleteIndex), restaurantList, optionList);
       } else {
         return null;
       }
     }
-    deleteRestaurant(restaurant, resList, optionList);
+    deleteRestaurant(restaurant, restaurantList, optionList);
 
-    return addRestaurant(container, resList, optionStateList, optionList, name, location);
+    return addRestaurant(container, restaurantList, optionStateList, optionList, name, location);
   }
 
-  public static String recommendRestaurant(ArrayList<Restaurant> resList, OptionList optionList,
+  public static String recommendRestaurant(RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList) {
-    String[] searchResultNameList = searchRestaurant(resList, optionList, optionStateList);
+    String[] searchResultNameList = searchRestaurant(restaurantList, optionList, optionStateList);
+    if (searchResultNameList.length == 0) {
+      return "결과 없음";
+    }
+
     int recommendIndex = (int) (Math.random() * searchResultNameList.length);
     return searchResultNameList[recommendIndex];
 
   }
 
 
-  public static ArrayList<Restaurant> filterList(ArrayList<String> optionList,
-      ArrayList<Restaurant> resList, ArrayList<Boolean> optionStateList, int listNum) {
-    ArrayList<Restaurant> filteredList = new ArrayList<Restaurant>();
+  public static RestaurantList filterList(ArrayList<String> optionList,
+      RestaurantList restaurantList, ArrayList<Boolean> optionStateList, int listNum) {
+    RestaurantList filteredList = new RestaurantList();
 
     for (int i = 0; i < optionList.size(); i++) {
       if (optionStateList.get(i + 5 * listNum)) {
         break;
       }
       if (i == optionList.size() - 1) {
-        return resList;
+        return restaurantList;
       }
     }
 
     if (listNum == OptionList.LOC) {
-      for (int i = 0; i < resList.size(); i++) {
+      for (int i = 0; i < restaurantList.size(); i++) {
         for (int j = 0; j < optionList.size(); j++) {
           if (!optionStateList.get(j + 5 * listNum)) {
             continue;
           }
-          if (resList.get(i).getLocation().equals(optionList.get(j))) {
-            filteredList.add(resList.get(i));
+          if (restaurantList.get(i).getLocation().equals(optionList.get(j))) {
+            filteredList.add(restaurantList.get(i));
             break;
           }
         }
       }
     } else {
-      for (int i = 0; i < resList.size(); i++) {
+      for (int i = 0; i < restaurantList.size(); i++) {
         for (int j = 0; j < optionList.size(); j++) {
           if (!optionStateList.get(j + 5 * listNum)) {
             continue;
           }
-          if (resList.get(i).getOptionList().contains(optionList.get(j))) {
-            filteredList.add(resList.get(i));
+          if (restaurantList.get(i).getOptionList().contains(optionList.get(j))) {
+            filteredList.add(restaurantList.get(i));
             break;
           }
         }
@@ -163,13 +166,13 @@ public class RestaurantManager {
   }
 
   public static int isNameContained(Restaurant restaurant, String name,
-      ArrayList<Restaurant> resList) {
+      RestaurantList restaurantList) {
 
-    for (int i = 0; i < resList.size(); i++) {
-      if (resList.get(i).equals(restaurant)) {
+    for (int i = 0; i < restaurantList.size(); i++) {
+      if (restaurantList.get(i).equals(restaurant)) {
         continue;
       }
-      if (resList.get(i).getName().equals(name)) {
+      if (restaurantList.get(i).getName().equals(name)) {
         return i;
       }
     }

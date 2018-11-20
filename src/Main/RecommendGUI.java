@@ -24,7 +24,7 @@ public class RecommendGUI extends JFrame {
   String recommendedRestaurantName;
   Restaurant recommendedRestaurant;
 
-  public RecommendGUI(ArrayList<Restaurant> resList, OptionList optionList,
+  public RecommendGUI(RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList, int state) {
     setTitle("RMeal");
 
@@ -58,6 +58,8 @@ public class RecommendGUI extends JFrame {
     container.add(explainLabel);
 
     ///////////////////////////////////////////제목//////////////////////////////////////////
+
+    /////////////////////////////////////////조건 입력////////////////////////////////////////
 
     JPanel optionSetPanel = createJPanel(10, 80, 960, 580);
     optionSetPanel.setBackground(Color.WHITE);
@@ -151,11 +153,13 @@ public class RecommendGUI extends JFrame {
       }
     }
 
+    /////////////////////////////////////////조건 입력////////////////////////////////////////
+
     ////////////////////////////////////////식당 추첨/////////////////////////////////////////
 
-    String[] resNameList = new String[resList.size()];
-    for (int i = 0; i < resList.size(); i++) {
-      resNameList[i] = resList.get(i).getName();
+    String[] resNameList = new String[restaurantList.size()];
+    for (int i = 0; i < restaurantList.size(); i++) {
+      resNameList[i] = restaurantList.get(i).getName();
     }
 
     JPanel recommendPanel = createJPanel(10, 665, 640, 83);
@@ -165,11 +169,11 @@ public class RecommendGUI extends JFrame {
     container.add(recommendPanel);
 
     if (state == SEARCHED_STATE) {
-      recommendedRestaurantName = recommendRestaurant(resList, optionList, optionStateList);
+      recommendedRestaurantName = recommendRestaurant(restaurantList, optionList, optionStateList);
 
-      for (int i = 0; i < resList.size(); i++) {
-        if (resList.get(i).getName().equals(recommendedRestaurantName)) {
-          recommendedRestaurant = resList.get(i);
+      for (int i = 0; i < restaurantList.size(); i++) {
+        if (restaurantList.get(i).getName().equals(recommendedRestaurantName)) {
+          recommendedRestaurant = restaurantList.get(i);
           break;
         }
       }
@@ -197,7 +201,8 @@ public class RecommendGUI extends JFrame {
       @Override
       public void actionPerformed(ActionEvent e) {
         dispose();
-        new RecommendGUI(resList, optionList, getOptionStateList(), RecommendGUI.SEARCHED_STATE)
+        new RecommendGUI(restaurantList, optionList, getOptionStateList(),
+            RecommendGUI.SEARCHED_STATE)
             .setLocationRelativeTo(null);
       }
     });
@@ -211,7 +216,7 @@ public class RecommendGUI extends JFrame {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           dispose();
-          new mainGUI(resList, optionList).setLocationRelativeTo(null);
+          new mainGUI(restaurantList, optionList).setLocationRelativeTo(null);
         }
       }
     });

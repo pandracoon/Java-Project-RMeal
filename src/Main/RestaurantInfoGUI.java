@@ -21,7 +21,7 @@ public class RestaurantInfoGUI extends JFrame {
   ArrayList<Boolean> optionStateList;
   RestaurantInfoGUI restaurantInfoGUI = this;
 
-  RestaurantInfoGUI(Restaurant restaurant, ArrayList<Restaurant> resList,
+  RestaurantInfoGUI(Restaurant restaurant, RestaurantList restaurantList,
       OptionList optionList, ArrayList<Boolean> optionStateList, SearchGUI searchGUI, int state) {
     setTitle(restaurant.getName());
 
@@ -29,7 +29,7 @@ public class RestaurantInfoGUI extends JFrame {
     container.setBackground(Color.WHITE);
     container.setLayout(null);
 
-    this.resList = resList;
+    this.resList = restaurantList;
     this.optionStateList = optionStateList;
     this.optionList = optionList;
 
@@ -77,7 +77,8 @@ public class RestaurantInfoGUI extends JFrame {
       modifyButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList, resList, searchGUI,
+          new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList, restaurantList,
+              searchGUI,
               restaurantInfoGUI).setLocationRelativeTo(null);
         }
       });
@@ -90,12 +91,12 @@ public class RestaurantInfoGUI extends JFrame {
           int choice = JOptionPane.showOptionDialog(container, "식당을 삭제하시겠습니까?", "식당 삭제",
               JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
           if (choice == 0) {
-            deleteRestaurant(restaurant, resList, optionList);
+            deleteRestaurant(restaurant, restaurantList, optionList);
             JOptionPane.showMessageDialog(container, "삭제되었습니다!", "삭제 성공",
                 JOptionPane.INFORMATION_MESSAGE);
             dispose();
             searchGUI.dispose();
-            new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
+            new SearchGUI(restaurantList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
                 .setLocationRelativeTo(null);
           }
         }

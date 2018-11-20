@@ -24,7 +24,7 @@ public class SearchGUI extends JFrame {
   public static final int INITIAL_STATE = 0;
   public static final int SEARCHED_STATE = 1;
 
-  SearchGUI(ArrayList<Restaurant> resList, OptionList optionList,
+  SearchGUI(RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList,
       int state) {
     setTitle("RMeal");
@@ -158,9 +158,9 @@ public class SearchGUI extends JFrame {
 
     ////////////////////////////////////////검색결과 리스트/////////////////////////////////////
 
-    String[] resNameList = new String[resList.size()];
-    for (int i = 0; i < resList.size(); i++) {
-      resNameList[i] = resList.get(i).getName();
+    String[] resNameList = new String[restaurantList.size()];
+    for (int i = 0; i < restaurantList.size(); i++) {
+      resNameList[i] = restaurantList.get(i).getName();
     }
 
     if (state == INITIAL_STATE) {
@@ -168,7 +168,7 @@ public class SearchGUI extends JFrame {
 
     }
     if (state == SEARCHED_STATE) {
-      searchResultNameList = searchRestaurant(resList, optionList, optionStateList);
+      searchResultNameList = searchRestaurant(restaurantList, optionList, optionStateList);
     }
 
     searchResultList = new JList<>(searchResultNameList);//인자로 들어갈 String 배열 다시 생각하기.
@@ -184,9 +184,9 @@ public class SearchGUI extends JFrame {
             int index = jlist.locationToIndex(e.getPoint());
             int i = 0;
             while (true) {
-              if (searchResultNameList[index].equals(resList.get(i).getName())) {
+              if (searchResultNameList[index].equals(restaurantList.get(i).getName())) {
                 ArrayList<Boolean> optionStateList = getOptionStateList();
-                new RestaurantInfoGUI(resList.get(i), resList, optionList,
+                new RestaurantInfoGUI(restaurantList.get(i), restaurantList, optionList,
                     optionStateList, searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI)
                     .setLocationRelativeTo(null);
                 break;
@@ -221,7 +221,7 @@ public class SearchGUI extends JFrame {
       public void actionPerformed(ActionEvent e) {
         ArrayList<Boolean> optionStateList = getOptionStateList();
         dispose();
-        new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
+        new SearchGUI(restaurantList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
             .setLocationRelativeTo(null);
       }
     });
@@ -235,7 +235,7 @@ public class SearchGUI extends JFrame {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           dispose();
-          new mainGUI(resList, optionList).setLocationRelativeTo(null);
+          new mainGUI(restaurantList, optionList).setLocationRelativeTo(null);
         }
       }
     });
@@ -247,9 +247,10 @@ public class SearchGUI extends JFrame {
       public void actionPerformed(ActionEvent e) {
         int i = 0;
         while (true) {
-          if (searchResultList.getSelectedValue().equals(resList.get(i).getName())) {
+          if (searchResultList.getSelectedValue().equals(restaurantList.get(i).getName())) {
             ArrayList<Boolean> optionStateList = getOptionStateList();
-            new RestaurantInfoGUI(resList.get(i), resList, optionList, optionStateList, searchGUI
+            new RestaurantInfoGUI(restaurantList.get(i), restaurantList, optionList,
+                optionStateList, searchGUI
                 , RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
             break;
           }

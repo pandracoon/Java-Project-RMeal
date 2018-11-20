@@ -21,7 +21,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
   ArrayList<Boolean> resOptionState;
 
   public ModifyRestaurantInfoGUI(Restaurant restaurant, OptionList optionList,
-      ArrayList<Boolean> optionStateList, ArrayList<Restaurant> resList, SearchGUI searchGUI,
+      ArrayList<Boolean> optionStateList, RestaurantList restaurantList, SearchGUI searchGUI,
       RestaurantInfoGUI restaurantInfoGUI) {
     setTitle(restaurant.getName());
 
@@ -135,7 +135,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
                 JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           ArrayList<Boolean> modifyOptionStateList = optionStateList();
-          Restaurant modifiedRestaurant = modifyRestaurant(restaurant, optionList, resList,
+          Restaurant modifiedRestaurant = modifyRestaurant(restaurant, optionList, restaurantList,
               modifyOptionStateList, nameTextField.getText(), locationTextField.getText(),
               container);
           if (modifiedRestaurant == null) {
@@ -147,9 +147,9 @@ public class ModifyRestaurantInfoGUI extends JFrame {
           dispose();
           restaurantInfoGUI.dispose();
           searchGUI.dispose();
-          new SearchGUI(resList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
+          new SearchGUI(restaurantList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
               .setLocationRelativeTo(null);
-          new RestaurantInfoGUI(modifiedRestaurant, resList, optionList, optionStateList,
+          new RestaurantInfoGUI(modifiedRestaurant, restaurantList, optionList, optionStateList,
               searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
 
         }
