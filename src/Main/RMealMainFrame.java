@@ -1,6 +1,9 @@
 package Main;
 
+import static Data.DataManager.*;
+
 import Data.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -25,6 +28,7 @@ public class RMealMainFrame extends JFrame {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
 
         if (choice == 0) {
+          dataSave(restaurantList, optionList);
           System.exit(1);
         } else {
           return;
@@ -41,12 +45,15 @@ public class RMealMainFrame extends JFrame {
   }
 
   public static void main(String[] args) {
-    //처음 실행일때와 아닐때를 구분해야함. 읽어들일 파일 존재 여부
-
-    //처음실행했다고 치고
+    Object[] objects = dataLoad();
     RestaurantList restaurantList = new RestaurantList();
-    restaurantList.add(new Restaurant("너네집 돈까스", "애넘"));
     OptionList optionList = new OptionList();
+
+    if (objects == null) {
+    } else {
+      restaurantList = (RestaurantList) objects[0];
+      optionList = (OptionList) objects[1];
+    }
     new RMealMainFrame(restaurantList, optionList).setLocationRelativeTo(null);
 
   }

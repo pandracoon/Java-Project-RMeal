@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RMeal:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RMeal_jar</output-path>
+    <root id="archive" name="RMeal.jar">
+      <element id="module-output" name="RMeal" />
+    </root>
+  </artifact>
+</component>

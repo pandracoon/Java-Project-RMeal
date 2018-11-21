@@ -1,8 +1,9 @@
 package Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class OptionList {
+public class OptionList implements Serializable {
 
   public static final int TYPE = 0;
   public static final int COST = 1;

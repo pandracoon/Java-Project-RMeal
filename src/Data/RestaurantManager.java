@@ -86,6 +86,10 @@ public class RestaurantManager {
         optionList.getList(OptionList.LOC).remove(restaurant.getLocation());
       }
     }
+
+    if (restaurantList.size() == 0) {
+      optionList.getList(OptionList.LOC).remove(restaurant.getLocation());
+    }
     return;
   }
 

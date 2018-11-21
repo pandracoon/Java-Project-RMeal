@@ -1,8 +1,9 @@
 package Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
 
   private String name;
   private String location;
@@ -30,12 +31,5 @@ public class Restaurant {
     return optionArrayList;
   }
 
-  public void modifyName(String name) {
-    this.name = name;
-  }
-
-  public void modifyLocation(String location) {
-    this.location = location;
-  }
 }
 

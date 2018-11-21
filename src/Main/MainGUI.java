@@ -1,5 +1,6 @@
 package Main;
 
+import static Data.DataManager.dataSave;
 import static Main.CreateComponent.*;
 
 import Data.*;
@@ -76,6 +77,7 @@ public class MainGUI extends JPanel {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
 
         if (choice == 0) {
+          dataSave(restaurantList, optionList);
           System.exit(1);
         } else {
           return;

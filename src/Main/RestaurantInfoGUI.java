@@ -94,7 +94,7 @@ public class RestaurantInfoGUI extends JFrame {
             JOptionPane.showMessageDialog(mainContainer, "삭제되었습니다!", "삭제 성공",
                 JOptionPane.INFORMATION_MESSAGE);
             dispose();
-            setVisible(false);
+            searchGUI.setVisible(false);
             mainContainer.remove(searchGUI);
             mainContainer
                 .add(new SearchGUI(mainContainer, restaurantList, optionList, optionStateList,
