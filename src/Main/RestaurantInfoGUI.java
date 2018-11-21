@@ -16,20 +16,20 @@ public class RestaurantInfoGUI extends JFrame {
   public static final int FROM_RECOMMENDGUI = 1;
 
   String[] answer = {"예", "아니오"};
-  ArrayList<Restaurant> resList;
+  RestaurantList restaurantList;
   OptionList optionList;
   ArrayList<Boolean> optionStateList;
   RestaurantInfoGUI restaurantInfoGUI = this;
 
-  RestaurantInfoGUI(Restaurant restaurant, RestaurantList restaurantList,
+  RestaurantInfoGUI(Container mainContainer, Restaurant restaurant, RestaurantList restaurantList,
       OptionList optionList, ArrayList<Boolean> optionStateList, SearchGUI searchGUI, int state) {
     setTitle(restaurant.getName());
 
-    Container container = this.getContentPane();
-    container.setBackground(Color.WHITE);
-    container.setLayout(null);
+    Container infoContainer = this.getContentPane();
+    infoContainer.setBackground(Color.WHITE);
+    infoContainer.setLayout(null);
 
-    this.resList = restaurantList;
+    this.restaurantList = restaurantList;
     this.optionStateList = optionStateList;
     this.optionList = optionList;
 
@@ -50,7 +50,7 @@ public class RestaurantInfoGUI extends JFrame {
     if (restaurant.getName().length() + restaurant.getLocation().length() >= 28) {
       nameLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 13));
     }
-    container.add(nameLabel);
+    infoContainer.add(nameLabel);
 
     String[] resOptionNameList = new String[restaurant.getOptionList().size()];
 
@@ -62,7 +62,7 @@ public class RestaurantInfoGUI extends JFrame {
     resOptionListPanel.setBackground(Color.WHITE);
     resOptionListPanel.setBorder(createTextBorder("특징", 28));
     resOptionListPanel.setLayout(new GridLayout(0, 1));
-    container.add(resOptionListPanel);
+    infoContainer.add(resOptionListPanel);
 
     JList<String> resOptionList = new JList<>(resOptionNameList);
     resOptionList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 20));
@@ -77,31 +77,33 @@ public class RestaurantInfoGUI extends JFrame {
       modifyButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList, restaurantList,
-              searchGUI,
-              restaurantInfoGUI).setLocationRelativeTo(null);
+          new ModifyRestaurantInfoGUI(mainContainer, restaurant, optionList, optionStateList,
+              restaurantList, searchGUI, restaurantInfoGUI).setLocationRelativeTo(null);
         }
       });
-      container.add(modifyButton);
+      infoContainer.add(modifyButton);
 
       JButton deleteButton = createJButton("삭제하기", 170, 502, 100, 50, 17);
       deleteButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          int choice = JOptionPane.showOptionDialog(container, "식당을 삭제하시겠습니까?", "식당 삭제",
+          int choice = JOptionPane.showOptionDialog(mainContainer, "식당을 삭제하시겠습니까?", "식당 삭제",
               JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
           if (choice == 0) {
             deleteRestaurant(restaurant, restaurantList, optionList);
-            JOptionPane.showMessageDialog(container, "삭제되었습니다!", "삭제 성공",
+            JOptionPane.showMessageDialog(mainContainer, "삭제되었습니다!", "삭제 성공",
                 JOptionPane.INFORMATION_MESSAGE);
             dispose();
-            searchGUI.dispose();
-            new SearchGUI(restaurantList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
-                .setLocationRelativeTo(null);
+            setVisible(false);
+            mainContainer.remove(searchGUI);
+            mainContainer
+                .add(new SearchGUI(mainContainer, restaurantList, optionList, optionStateList,
+                    SearchGUI.SEARCHED_STATE));
+
           }
         }
       });
-      container.add(deleteButton);
+      infoContainer.add(deleteButton);
 
       JButton backButton = createJButton("돌아가기", 280, 502, 100, 50, 17);
       backButton.addActionListener(new ActionListener() {
@@ -110,7 +112,7 @@ public class RestaurantInfoGUI extends JFrame {
           dispose();
         }
       });
-      container.add(backButton);
+      infoContainer.add(backButton);
     }
 
     if (state == FROM_RECOMMENDGUI) {
@@ -121,7 +123,7 @@ public class RestaurantInfoGUI extends JFrame {
           dispose();
         }
       });
-      container.add(backButton);
+      infoContainer.add(backButton);
     }
 
     /////////////////////////////////////버튼///////////////////////////////////////////

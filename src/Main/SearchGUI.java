@@ -4,13 +4,12 @@ import static Data.RestaurantManager.*;
 import static Main.CreateComponent.*;
 
 import Data.*;
-import Main.RMealMainGUI.mainGUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class SearchGUI extends JFrame {
+public class SearchGUI extends JPanel {
 
   String[] answer = {"예", "아니오"};
   String[] searchResultNameList;
@@ -24,40 +23,21 @@ public class SearchGUI extends JFrame {
   public static final int INITIAL_STATE = 0;
   public static final int SEARCHED_STATE = 1;
 
-  SearchGUI(RestaurantList restaurantList, OptionList optionList,
+  SearchGUI(Container mainContainer, RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList,
       int state) {
-    setTitle("RMeal");
 
-    Container container = this.getContentPane();
-    container.setBackground(Color.WHITE);
-    container.setLayout(null);
-
-    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-    this.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-
-        int choice = JOptionPane.showOptionDialog(container, "RMeal을 종료하시겠습니까?", "RMeal 종료",
-            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
-
-        if (choice == 0) {
-          System.exit(1);
-        } else {
-          return;
-        }
-      }
-    });
+    setLayout(null);
+    setBackground(Color.WHITE);
 
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 조회", 20, 20, 200, 50, 50);
     titleLabel.setFont(new Font("나눔고딕 ExtraBold", Font.BOLD, 40));
-    container.add(titleLabel);
+    add(titleLabel);
 
     JLabel explainLabel = createJLabel("조건을 선택하고 검색 버튼을 누르세요", 220, 30, 500, 50, 20);
-    container.add(explainLabel);
+    add(explainLabel);
 
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
@@ -66,7 +46,7 @@ public class SearchGUI extends JFrame {
     JPanel optionSetPanel = createJPanel(10, 80, 560, 600);
     optionSetPanel.setBackground(Color.WHITE);
     optionSetPanel.setLayout(new GridLayout(2, 2, 5, 5));
-    container.add(optionSetPanel);
+    add(optionSetPanel);
 
     JPanel typeCheckBoxPanel = new JPanel();
     typeCheckBoxPanel.setBackground(Color.WHITE);
@@ -186,7 +166,8 @@ public class SearchGUI extends JFrame {
             while (true) {
               if (searchResultNameList[index].equals(restaurantList.get(i).getName())) {
                 ArrayList<Boolean> optionStateList = getOptionStateList();
-                new RestaurantInfoGUI(restaurantList.get(i), restaurantList, optionList,
+                new RestaurantInfoGUI(mainContainer, restaurantList.get(i), restaurantList,
+                    optionList,
                     optionStateList, searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI)
                     .setLocationRelativeTo(null);
                 break;
@@ -204,7 +185,7 @@ public class SearchGUI extends JFrame {
     searchResultListPanel.setBorder(createTextBorder("검색 결과", 28));
     searchResultListPanel.setLayout(new GridLayout(0, 1));
     searchResultListPanel.setBackground(Color.WHITE);
-    container.add(searchResultListPanel);
+    add(searchResultListPanel);
 
     JScrollPane searchResultListScrollPane = new JScrollPane(searchResultList,
         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -220,26 +201,30 @@ public class SearchGUI extends JFrame {
       @Override
       public void actionPerformed(ActionEvent e) {
         ArrayList<Boolean> optionStateList = getOptionStateList();
-        dispose();
-        new SearchGUI(restaurantList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
-            .setLocationRelativeTo(null);
+
+        setVisible(false);
+        mainContainer.add(new SearchGUI(mainContainer, restaurantList, optionList, optionStateList,
+            SearchGUI.SEARCHED_STATE));
+        mainContainer.remove(searchGUI);
+
       }
     });
-    container.add(searchButton);
+    add(searchButton);
 
     JButton backButton = createJButton("돌아가기", 765, 695, 100, 50, 17);
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(container, "메인 화면으로 돌아가시겠습니까?", "돌아가기",
+        int choice = JOptionPane.showOptionDialog(mainContainer, "메인 화면으로 돌아가시겠습니까?", "돌아가기",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
-          dispose();
-          new mainGUI(restaurantList, optionList).setLocationRelativeTo(null);
+          setVisible(false);
+          mainContainer.add(new MainGUI(mainContainer, restaurantList, optionList));
+          mainContainer.remove(searchGUI);
         }
       }
     });
-    container.add(backButton);
+    add(backButton);
 
     JButton showButton = createJButton("정보보기", 875, 695, 100, 50, 17);
     showButton.addActionListener(new ActionListener() {
@@ -249,7 +234,7 @@ public class SearchGUI extends JFrame {
         while (true) {
           if (searchResultList.getSelectedValue().equals(restaurantList.get(i).getName())) {
             ArrayList<Boolean> optionStateList = getOptionStateList();
-            new RestaurantInfoGUI(restaurantList.get(i), restaurantList, optionList,
+            new RestaurantInfoGUI(mainContainer, restaurantList.get(i), restaurantList, optionList,
                 optionStateList, searchGUI
                 , RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
             break;
@@ -258,12 +243,9 @@ public class SearchGUI extends JFrame {
         }
       }
     });
-    container.add(showButton);
+    add(showButton);
 
     ///////////////////////////////////////////버튼///////////////////////////////////////////
-
-    setSize(1000, 800);
-    setVisible(true);
 
   }
 

@@ -1,11 +1,9 @@
 package Main;
 
-import static Data.RestaurantManager.*;
 import static Data.RestaurantManager.modifyRestaurant;
 import static Main.CreateComponent.*;
 
 import Data.*;
-import Main.RMealMainGUI.mainGUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -20,20 +18,21 @@ public class ModifyRestaurantInfoGUI extends JFrame {
   JCheckBox[] numOfPeopleCheckBox;
   ArrayList<Boolean> resOptionState;
 
-  public ModifyRestaurantInfoGUI(Restaurant restaurant, OptionList optionList,
+  public ModifyRestaurantInfoGUI(Container mainContainer, Restaurant restaurant,
+      OptionList optionList,
       ArrayList<Boolean> optionStateList, RestaurantList restaurantList, SearchGUI searchGUI,
       RestaurantInfoGUI restaurantInfoGUI) {
     setTitle(restaurant.getName());
 
-    Container container = this.getContentPane();
-    container.setBackground(Color.WHITE);
-    container.setLayout(null);
+    Container modifyContainer = this.getContentPane();
+    modifyContainer.setBackground(Color.WHITE);
+    modifyContainer.setLayout(null);
 
     //////////////////////////////////////////제목//////////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("정보 수정하기", 20, 20, 300, 50, 50);
     titleLabel.setFont(new Font("나눔고딕 ExtraBold", Font.BOLD, 40));
-    container.add(titleLabel);
+    modifyContainer.add(titleLabel);
 
     //////////////////////////////////////////제목//////////////////////////////////////////////
 
@@ -43,7 +42,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     nameTextAreaPanel.setBackground(Color.WHITE);
     nameTextAreaPanel.setLayout(new GridLayout(0, 1));
     nameTextAreaPanel.setBorder(createTextBorder("이름", 25));
-    container.add(nameTextAreaPanel);
+    modifyContainer.add(nameTextAreaPanel);
 
     JTextField nameTextField = new JTextField(restaurant.getName());
     nameTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
@@ -53,7 +52,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     locationTextAreaPanel.setBackground(Color.WHITE);
     locationTextAreaPanel.setLayout(new GridLayout(0, 1));
     locationTextAreaPanel.setBorder(createTextBorder("위치", 25));
-    container.add(locationTextAreaPanel);
+    modifyContainer.add(locationTextAreaPanel);
 
     JTextField locationTextField = new JTextField(restaurant.getLocation());
     locationTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
@@ -62,7 +61,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     JPanel optionSetPanel = createJPanel(10, 145, 960, 535);
     optionSetPanel.setBackground(Color.WHITE);
     optionSetPanel.setLayout(new GridLayout(1, 0, 5, 5));
-    container.add(optionSetPanel);
+    modifyContainer.add(optionSetPanel);
 
     JPanel typeCheckBoxPanel = new JPanel();
     typeCheckBoxPanel.setBackground(Color.WHITE);
@@ -111,14 +110,14 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(container, "수정하지 않고 돌아가시겠습니까?", "돌아가기",
+        int choice = JOptionPane.showOptionDialog(modifyContainer, "수정하지 않고 돌아가시겠습니까?", "돌아가기",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           dispose();
         }
       }
     });
-    container.add(backButton);
+    modifyContainer.add(backButton);
 
     JButton addButton = createJButton("수정하기", 875, 695, 100, 50, 17);
     addButton.addActionListener(new ActionListener() {
@@ -126,36 +125,38 @@ public class ModifyRestaurantInfoGUI extends JFrame {
       public void actionPerformed(ActionEvent e) {
         if (nameTextField.getText().equals("") || locationTextField.getText().equals("")) {
           JOptionPane
-              .showMessageDialog(container, "이름과 위치를 적어주세요.", "수정 실패",
+              .showMessageDialog(modifyContainer, "이름과 위치를 적어주세요.", "수정 실패",
                   JOptionPane.INFORMATION_MESSAGE);
           return;
         }
         int choice = JOptionPane
-            .showOptionDialog(container, "수정하시겠습니까?", "수정하기", JOptionPane.YES_NO_OPTION,
+            .showOptionDialog(modifyContainer, "수정하시겠습니까?", "수정하기", JOptionPane.YES_NO_OPTION,
                 JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           ArrayList<Boolean> modifyOptionStateList = optionStateList();
           Restaurant modifiedRestaurant = modifyRestaurant(restaurant, optionList, restaurantList,
               modifyOptionStateList, nameTextField.getText(), locationTextField.getText(),
-              container);
+              modifyContainer);
           if (modifiedRestaurant == null) {
             return;
           }
           JOptionPane
-              .showMessageDialog(container, "수정되었습니다!", "수정 성공",
+              .showMessageDialog(modifyContainer, "수정되었습니다!", "수정 성공",
                   JOptionPane.INFORMATION_MESSAGE);
           dispose();
           restaurantInfoGUI.dispose();
-          searchGUI.dispose();
-          new SearchGUI(restaurantList, optionList, optionStateList, SearchGUI.SEARCHED_STATE)
-              .setLocationRelativeTo(null);
-          new RestaurantInfoGUI(modifiedRestaurant, restaurantList, optionList, optionStateList,
+          searchGUI.setVisible(false);
+          mainContainer.remove(searchGUI);
+          mainContainer.add(new SearchGUI(mainContainer, restaurantList, optionList,
+              optionStateList, SearchGUI.SEARCHED_STATE));
+          new RestaurantInfoGUI(mainContainer, modifiedRestaurant, restaurantList, optionList,
+              optionStateList,
               searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
 
         }
       }
     });
-    container.add(addButton);
+    modifyContainer.add(addButton);
 
     /////////////////////////////////////////버튼//////////////////////////////////////////////
 

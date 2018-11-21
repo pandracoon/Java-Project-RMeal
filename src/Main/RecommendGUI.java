@@ -5,13 +5,12 @@ import static Data.RestaurantManager.recommendRestaurant;
 import static Main.CreateComponent.*;
 
 import Data.*;
-import Main.RMealMainGUI.mainGUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class RecommendGUI extends JFrame {
+public class RecommendGUI extends JPanel {
 
   public static final int INITIAL_STATE = 0;
   public static final int SEARCHED_STATE = 1;
@@ -23,39 +22,22 @@ public class RecommendGUI extends JFrame {
   JCheckBox[] locationCheckBox;
   String recommendedRestaurantName;
   Restaurant recommendedRestaurant;
+  RecommendGUI recommendGUI = this;
 
-  public RecommendGUI(RestaurantList restaurantList, OptionList optionList,
+  public RecommendGUI(Container mainContainer, RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList, int state) {
-    setTitle("RMeal");
 
-    Container container = this.getContentPane();
-    container.setBackground(Color.WHITE);
-    container.setLayout(null);
-
-    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-    this.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosing(WindowEvent e) {
-        int choice = JOptionPane.showOptionDialog(container, "RMeal을 종료하시겠습니까?", "RMeal 종료",
-            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
-
-        if (choice == 0) {
-          System.exit(1);
-        } else {
-          return;
-        }
-      }
-    });
+    setBackground(Color.WHITE);
+    setLayout(null);
 
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 추천", 20, 20, 200, 50, 50);
     titleLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 40));
-    container.add(titleLabel);
+    add(titleLabel);
 
     JLabel explainLabel = createJLabel("추천받을 조건을 선택하세요.", 220, 30, 500, 50, 20);
-    container.add(explainLabel);
+    add(explainLabel);
 
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
@@ -64,7 +46,7 @@ public class RecommendGUI extends JFrame {
     JPanel optionSetPanel = createJPanel(10, 80, 960, 580);
     optionSetPanel.setBackground(Color.WHITE);
     optionSetPanel.setLayout(new GridLayout(2, 2, 5, 5));
-    container.add(optionSetPanel);
+    add(optionSetPanel);
 
     JPanel typeCheckBoxPanel = new JPanel();
     typeCheckBoxPanel.setBackground(Color.WHITE);
@@ -166,7 +148,7 @@ public class RecommendGUI extends JFrame {
     recommendPanel.setBackground(Color.WHITE);
     recommendPanel.setBorder(createTextBorder("추천 결과", 28));
     recommendPanel.setLayout(new GridLayout(0, 1));
-    container.add(recommendPanel);
+    add(recommendPanel);
 
     if (state == SEARCHED_STATE) {
       recommendedRestaurantName = recommendRestaurant(restaurantList, optionList, optionStateList);
@@ -190,39 +172,40 @@ public class RecommendGUI extends JFrame {
     showButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        new RestaurantInfoGUI(recommendedRestaurant, null, null, null, null,
+        new RestaurantInfoGUI(mainContainer, recommendedRestaurant, null, null, null, null,
             RestaurantInfoGUI.FROM_RECOMMENDGUI).setLocationRelativeTo(null);
       }
     });
-    container.add(showButton);
+    add(showButton);
 
     JButton recommendButton = createJButton("추천받기", 765, 695, 100, 50, 17);
     recommendButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        dispose();
-        new RecommendGUI(restaurantList, optionList, getOptionStateList(),
-            RecommendGUI.SEARCHED_STATE)
-            .setLocationRelativeTo(null);
+        setVisible(false);
+        mainContainer.remove(recommendGUI);
+        mainContainer
+            .add(new RecommendGUI(mainContainer, restaurantList, optionList, getOptionStateList(),
+                RecommendGUI.SEARCHED_STATE));
       }
     });
-    container.add(recommendButton);
+    add(recommendButton);
 
     JButton backButton = createJButton("돌아가기", 875, 695, 100, 50, 17);
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(container, "메인 화면으로 돌아가시겠습니까?", "돌아가기",
+        int choice = JOptionPane.showOptionDialog(mainContainer, "메인 화면으로 돌아가시겠습니까?", "돌아가기",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
-          dispose();
-          new mainGUI(restaurantList, optionList).setLocationRelativeTo(null);
+          setVisible(false);
+          mainContainer.remove(recommendGUI);
+          mainContainer.add(new MainGUI(mainContainer, restaurantList, optionList));
         }
       }
     });
-    container.add(backButton);
+    add(backButton);
 
-    setSize(1000, 800);
     setVisible(true);
 
   }
