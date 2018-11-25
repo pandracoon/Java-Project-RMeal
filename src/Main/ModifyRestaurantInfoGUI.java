@@ -19,9 +19,9 @@ public class ModifyRestaurantInfoGUI extends JFrame {
   ArrayList<Boolean> resOptionState;
 
   public ModifyRestaurantInfoGUI(Container mainContainer, Restaurant restaurant,
-      OptionList optionList,
-      ArrayList<Boolean> optionStateList, RestaurantList restaurantList, SearchGUI searchGUI,
-      RestaurantInfoGUI restaurantInfoGUI) {
+      OptionList optionList, ArrayList<Boolean> optionStateList, RestaurantList restaurantList,
+      SearchGUI searchGUI, RestaurantInfoGUI restaurantInfoGUI) {
+
     setTitle(restaurant.getName());
 
     Container modifyContainer = this.getContentPane();
@@ -31,7 +31,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     //////////////////////////////////////////제목//////////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("정보 수정하기", 20, 20, 300, 50, 50);
-    titleLabel.setFont(new Font("나눔고딕 ExtraBold", Font.BOLD, 40));
+    titleLabel.setFont(new Font("함초롬돋움", Font.BOLD, 40));
     modifyContainer.add(titleLabel);
 
     //////////////////////////////////////////제목//////////////////////////////////////////////
@@ -45,7 +45,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     modifyContainer.add(nameTextAreaPanel);
 
     JTextField nameTextField = new JTextField(restaurant.getName());
-    nameTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
+    nameTextField.setFont(new Font("함초롬돋움", Font.BOLD, 17));
     nameTextAreaPanel.add(nameTextField);
 
     JPanel locationTextAreaPanel = createJPanel(495, 80, 485, 65);
@@ -55,7 +55,7 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     modifyContainer.add(locationTextAreaPanel);
 
     JTextField locationTextField = new JTextField(restaurant.getLocation());
-    locationTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
+    locationTextField.setFont(new Font("함초롬돋움", Font.BOLD, 17));
     locationTextAreaPanel.add(locationTextField);
 
     JPanel optionSetPanel = createJPanel(10, 145, 960, 535);

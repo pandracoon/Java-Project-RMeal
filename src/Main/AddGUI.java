@@ -27,7 +27,7 @@ public class AddGUI extends JPanel {
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 추가", 20, 20, 200, 50, 50);
-    titleLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 40));
+    titleLabel.setFont(new Font("함초롬돋움", Font.BOLD, 40));
     add(titleLabel);
 
     JLabel explainLabel = createJLabel("이름과 위치를 입력하고 해당하는 내용을 전부 체크하세요.", 220, 30, 500, 50, 20);
@@ -43,7 +43,7 @@ public class AddGUI extends JPanel {
     add(nameTextAreaPanel);
 
     nameTextField = new JTextField();
-    nameTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
+    nameTextField.setFont(new Font("함초롬돋움", Font.BOLD, 17));
     nameTextAreaPanel.add(nameTextField);
 
     JPanel locationTextAreaPanel = createJPanel(495, 80, 485, 65);
@@ -53,26 +53,31 @@ public class AddGUI extends JPanel {
     add(locationTextAreaPanel);
 
     locationTextField = new JTextField();
-    locationTextField.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 17));
+    locationTextField.setFont(new Font("함초롬돋움", Font.BOLD, 17));
     locationTextAreaPanel.add(locationTextField);
 
-    JPanel typeCheckBoxPanel = createJPanel(10, 145, 320, 535);
+    JPanel optionSetPanel = createJPanel(10, 145, 960, 535);
+    optionSetPanel.setBackground(Color.WHITE);
+    optionSetPanel.setLayout(new GridLayout(1, 0, 5, 5));
+    add(optionSetPanel);
+
+    JPanel typeCheckBoxPanel = new JPanel();
     typeCheckBoxPanel.setBackground(Color.WHITE);
     typeCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    typeCheckBoxPanel.setBorder(createTextBorder("식사", 25));
-    add(typeCheckBoxPanel);
+    typeCheckBoxPanel.setBorder(createTextBorder("식사", 28));
+    optionSetPanel.add(typeCheckBoxPanel);
 
-    JPanel costCheckBoxPanel = createJPanel(335, 145, 320, 535);
+    JPanel costCheckBoxPanel = new JPanel();
     costCheckBoxPanel.setBackground(Color.WHITE);
     costCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    costCheckBoxPanel.setBorder(createTextBorder("가격대", 25));
-    add(costCheckBoxPanel);
+    costCheckBoxPanel.setBorder(createTextBorder("가격대", 28));
+    optionSetPanel.add(costCheckBoxPanel);
 
-    JPanel numOfPeopleCheckBoxPanel = createJPanel(660, 145, 320, 535);
+    JPanel numOfPeopleCheckBoxPanel = new JPanel();
     numOfPeopleCheckBoxPanel.setBackground(Color.WHITE);
     numOfPeopleCheckBoxPanel.setLayout(new GridLayout(0, 1));
-    numOfPeopleCheckBoxPanel.setBorder(createTextBorder("인원", 25));
-    add(numOfPeopleCheckBoxPanel);
+    numOfPeopleCheckBoxPanel.setBorder(createTextBorder("인원", 28));
+    optionSetPanel.add(numOfPeopleCheckBoxPanel);
 
     typeCheckBox = new JCheckBox[optionList.getList(optionList.TYPE).size()];
     for (int i = 0; i < optionList.getList(optionList.TYPE).size(); i++) {

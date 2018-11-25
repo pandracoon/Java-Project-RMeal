@@ -33,7 +33,7 @@ public class RecommendGUI extends JPanel {
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 추천", 20, 20, 200, 50, 50);
-    titleLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 40));
+    titleLabel.setFont(new Font("함초롬돋움", Font.BOLD, 40));
     add(titleLabel);
 
     JLabel explainLabel = createJLabel("추천받을 조건을 선택하세요.", 220, 30, 500, 50, 20);
@@ -160,7 +160,7 @@ public class RecommendGUI extends JPanel {
         }
       }
       JLabel recommendLabel = createJLabel(recommendedRestaurantName, 20, 20, 200, 50, 50);
-      recommendLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 40));
+      recommendLabel.setFont(new Font("함초롬돋움", Font.BOLD, 31));
       recommendPanel.add(recommendLabel);
     }
 

@@ -33,7 +33,7 @@ public class SearchGUI extends JPanel {
     ///////////////////////////////////////////제목//////////////////////////////////////////
 
     JLabel titleLabel = createJLabel("식당 조회", 20, 20, 200, 50, 50);
-    titleLabel.setFont(new Font("나눔고딕 ExtraBold", Font.BOLD, 40));
+    titleLabel.setFont(new Font("함초롬돋움", Font.BOLD, 40));
     add(titleLabel);
 
     JLabel explainLabel = createJLabel("조건을 선택하고 검색 버튼을 누르세요", 220, 30, 500, 50, 20);
@@ -153,7 +153,7 @@ public class SearchGUI extends JPanel {
 
     searchResultList = new JList<>(searchResultNameList);//인자로 들어갈 String 배열 다시 생각하기.
     searchResultList.setBorder(null);
-    searchResultList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 18));
+    searchResultList.setFont(new Font("함초롬돋움", Font.BOLD, 18));
     searchResultList.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -181,7 +181,7 @@ public class SearchGUI extends JPanel {
     });
 
     JPanel searchResultListPanel = createJPanel(580, 80, 400, 600);
-    searchResultListPanel.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 18));
+    searchResultListPanel.setFont(new Font("함초롬돋움", Font.BOLD, 18));
     searchResultListPanel.setBorder(createTextBorder("검색 결과", 28));
     searchResultListPanel.setLayout(new GridLayout(0, 1));
     searchResultListPanel.setBackground(Color.WHITE);

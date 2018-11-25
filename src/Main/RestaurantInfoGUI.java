@@ -37,18 +37,18 @@ public class RestaurantInfoGUI extends JFrame {
 
     JLabel nameLabel = createJLabel(restaurant.getName() + " / " + restaurant.getLocation(), 10, 10,
         430, 30, 25);
-    nameLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 35));
+    nameLabel.setFont(new Font("함초롬돋움", Font.BOLD, 35));
     if (restaurant.getName().length() + restaurant.getLocation().length() >= 12) {
-      nameLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 25));
+      nameLabel.setFont(new Font("함초롬돋움", Font.BOLD, 25));
     }
     if (restaurant.getName().length() + restaurant.getLocation().length() >= 17) {
-      nameLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 20));
+      nameLabel.setFont(new Font("함초롬돋움", Font.BOLD, 20));
     }
     if (restaurant.getName().length() + restaurant.getLocation().length() >= 21) {
-      nameLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 15));
+      nameLabel.setFont(new Font("함초롬돋움", Font.BOLD, 15));
     }
     if (restaurant.getName().length() + restaurant.getLocation().length() >= 28) {
-      nameLabel.setFont(new Font("나눔스퀘어 ExtraBold", Font.BOLD, 13));
+      nameLabel.setFont(new Font("함초롬돋움", Font.BOLD, 13));
     }
     infoContainer.add(nameLabel);
 
@@ -65,7 +65,7 @@ public class RestaurantInfoGUI extends JFrame {
     infoContainer.add(resOptionListPanel);
 
     JList<String> resOptionList = new JList<>(resOptionNameList);
-    resOptionList.setFont(new Font("나눔스퀘어 Bold", Font.BOLD, 20));
+    resOptionList.setFont(new Font("함초롬돋움", Font.BOLD, 20));
     resOptionListPanel.add(resOptionList);
 
     //////////////////////////////////////정보////////////////////////////////////////////

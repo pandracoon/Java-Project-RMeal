@@ -20,7 +20,7 @@ public class MainGUI extends JPanel {
 
     JLabel titleLabel = createJLabel("RMeal", 200, 150, 600, 200, 120);
     titleLabel.setHorizontalAlignment(JLabel.CENTER);
-    titleLabel.setFont(new Font("나눔스퀘어 BOLD", Font.BOLD, 120));
+    titleLabel.setFont(new Font("함초롬돋움", Font.BOLD, 120));
     add(titleLabel);
 
     JButton addButton = createJButton("식당 추가", 350, 390, 300, 50, 20);
