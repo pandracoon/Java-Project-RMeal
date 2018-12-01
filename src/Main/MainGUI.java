@@ -31,8 +31,8 @@ public class MainGUI extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        mainContainer.add(new AddGUI(mainContainer, restaurantList, optionList));
-        mainContainer.remove(mainGUI);
+        getParent().add(new AddGUI(mainContainer, restaurantList, optionList));
+        getParent().remove(mainGUI);
       }
     });
     add(addButton);
@@ -45,9 +45,9 @@ public class MainGUI extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        mainContainer.add(new SearchGUI(mainContainer, restaurantList, optionList, null,
+        getParent().add(new SearchGUI(mainContainer, restaurantList, optionList, null,
             SearchGUI.INITIAL_STATE));
-        mainContainer.remove(mainGUI);
+        getParent().remove(mainGUI);
       }
     });
     add(searchButton);
@@ -59,10 +59,9 @@ public class MainGUI extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        mainContainer.remove(mainGUI);
-        mainContainer.add(new RecommendGUI(mainContainer, restaurantList, optionList, null,
+        getParent().add(new RecommendGUI(mainContainer, restaurantList, optionList, null,
             RecommendGUI.INITIAL_STATE));
-
+        getParent().remove(mainGUI);
       }
     });
     add(recommendButton);

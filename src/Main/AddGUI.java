@@ -110,8 +110,8 @@ public class AddGUI extends JPanel {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           setVisible(false);
-          mainContainer.add(new MainGUI(mainContainer, restaurantList, optionList));
-          mainContainer.remove(addGUI);
+          getParent().add(new MainGUI(mainContainer, restaurantList, optionList));
+          getParent().remove(addGUI);
         }
       }
     });
@@ -141,8 +141,8 @@ public class AddGUI extends JPanel {
               .showMessageDialog(mainContainer, "추가되었습니다!", "추가 성공",
                   JOptionPane.INFORMATION_MESSAGE);
           setVisible(false);
-          mainContainer.add(new MainGUI(mainContainer, restaurantList, optionList));
-          mainContainer.remove(addGUI);
+          getParent().add(new MainGUI(mainContainer, restaurantList, optionList));
+          getParent().remove(addGUI);
         }
       }
     });

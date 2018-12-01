@@ -203,9 +203,9 @@ public class SearchGUI extends JPanel {
         ArrayList<Boolean> optionStateList = getOptionStateList();
 
         setVisible(false);
-        mainContainer.add(new SearchGUI(mainContainer, restaurantList, optionList, optionStateList,
+        getParent().add(new SearchGUI(mainContainer, restaurantList, optionList, optionStateList,
             SearchGUI.SEARCHED_STATE));
-        mainContainer.remove(searchGUI);
+        getParent().remove(searchGUI);
 
       }
     });
@@ -215,12 +215,12 @@ public class SearchGUI extends JPanel {
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(mainContainer, "메인 화면으로 돌아가시겠습니까?", "돌아가기",
+        int choice = JOptionPane.showOptionDialog(getParent(), "메인 화면으로 돌아가시겠습니까?", "돌아가기",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           setVisible(false);
-          mainContainer.add(new MainGUI(mainContainer, restaurantList, optionList));
-          mainContainer.remove(searchGUI);
+          getParent().add(new MainGUI(mainContainer, restaurantList, optionList));
+          getParent().remove(searchGUI);
         }
       }
     });
