@@ -16,9 +16,8 @@ public class ModifyRestaurantInfoGUI extends JFrame {
   JCheckBox[] typeCheckBox;
   JCheckBox[] costCheckBox;
   JCheckBox[] numOfPeopleCheckBox;
-  ArrayList<Boolean> resOptionState;
 
-  public ModifyRestaurantInfoGUI(Container mainContainer, Restaurant restaurant,
+  public ModifyRestaurantInfoGUI(Restaurant restaurant,
       OptionList optionList, ArrayList<Boolean> optionStateList, RestaurantList restaurantList,
       SearchGUI searchGUI, RestaurantInfoGUI restaurantInfoGUI) {
 
@@ -146,10 +145,10 @@ public class ModifyRestaurantInfoGUI extends JFrame {
           dispose();
           restaurantInfoGUI.dispose();
           searchGUI.setVisible(false);
-          mainContainer.remove(searchGUI);
-          mainContainer.add(new SearchGUI(mainContainer, restaurantList, optionList,
+          searchGUI.getParent().add(new SearchGUI(restaurantList, optionList,
               optionStateList, SearchGUI.SEARCHED_STATE));
-          new RestaurantInfoGUI(mainContainer, modifiedRestaurant, restaurantList, optionList,
+          searchGUI.getParent().remove(searchGUI);
+          new RestaurantInfoGUI(modifiedRestaurant, restaurantList, optionList,
               optionStateList,
               searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
 

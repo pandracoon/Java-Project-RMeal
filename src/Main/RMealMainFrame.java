@@ -36,7 +36,7 @@ public class RMealMainFrame extends JFrame {
       }
     });
 
-    mainContainer.add(new MainGUI(mainContainer, restaurantList, optionList));
+    mainContainer.add(new MainGUI(restaurantList, optionList));
 
     setSize(1000, 800);
     setVisible(true);

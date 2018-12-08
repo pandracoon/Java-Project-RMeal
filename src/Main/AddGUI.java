@@ -19,7 +19,7 @@ public class AddGUI extends JPanel {
   JTextField locationTextField;
   AddGUI addGUI = this;
 
-  AddGUI(Container mainContainer, RestaurantList restaurantList, OptionList optionList) {
+  AddGUI(RestaurantList restaurantList, OptionList optionList) {
 
     setBackground(Color.WHITE);
     setLayout(null);
@@ -106,11 +106,11 @@ public class AddGUI extends JPanel {
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(mainContainer, "메인 화면으로 돌아가시겠습니까?", "돌아가기",
+        int choice = JOptionPane.showOptionDialog(getParent(), "메인 화면으로 돌아가시겠습니까?", "돌아가기",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           setVisible(false);
-          getParent().add(new MainGUI(mainContainer, restaurantList, optionList));
+          getParent().add(new MainGUI(restaurantList, optionList));
           getParent().remove(addGUI);
         }
       }
@@ -123,25 +123,25 @@ public class AddGUI extends JPanel {
       public void actionPerformed(ActionEvent e) {
         if (nameTextField.getText().equals("") || locationTextField.getText().equals("")) {
           JOptionPane
-              .showMessageDialog(mainContainer, "이름과 위치를 적어주세요.", "추가 실패",
+              .showMessageDialog(getParent(), "이름과 위치를 적어주세요.", "추가 실패",
                   JOptionPane.INFORMATION_MESSAGE);
           return;
         }
-        int choice = JOptionPane.showOptionDialog(mainContainer, nameTextField.getText() + " 식당을 "
+        int choice = JOptionPane.showOptionDialog(getParent(), nameTextField.getText() + " 식당을 "
                 + "추가하시겠습니까?", "추가하기", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
             answer, answer[0]);
         if (choice == 0) {
           ArrayList<Boolean> optionStateList = getOptionStateList();
-          Restaurant addedRestaurant = addRestaurant(mainContainer, restaurantList, optionStateList,
+          Restaurant addedRestaurant = addRestaurant(getParent(), restaurantList, optionStateList,
               optionList, nameTextField.getText(), locationTextField.getText());
           if (addedRestaurant == null) {
             return;
           }
           JOptionPane
-              .showMessageDialog(mainContainer, "추가되었습니다!", "추가 성공",
+              .showMessageDialog(getParent(), "추가되었습니다!", "추가 성공",
                   JOptionPane.INFORMATION_MESSAGE);
           setVisible(false);
-          getParent().add(new MainGUI(mainContainer, restaurantList, optionList));
+          getParent().add(new MainGUI(restaurantList, optionList));
           getParent().remove(addGUI);
         }
       }

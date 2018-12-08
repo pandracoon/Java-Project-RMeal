@@ -23,7 +23,7 @@ public class SearchGUI extends JPanel {
   public static final int INITIAL_STATE = 0;
   public static final int SEARCHED_STATE = 1;
 
-  SearchGUI(Container mainContainer, RestaurantList restaurantList, OptionList optionList,
+  SearchGUI(RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList,
       int state) {
 
@@ -166,7 +166,7 @@ public class SearchGUI extends JPanel {
             while (true) {
               if (searchResultNameList[index].equals(restaurantList.get(i).getName())) {
                 ArrayList<Boolean> optionStateList = getOptionStateList();
-                new RestaurantInfoGUI(mainContainer, restaurantList.get(i), restaurantList,
+                new RestaurantInfoGUI(restaurantList.get(i), restaurantList,
                     optionList,
                     optionStateList, searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI)
                     .setLocationRelativeTo(null);
@@ -203,7 +203,7 @@ public class SearchGUI extends JPanel {
         ArrayList<Boolean> optionStateList = getOptionStateList();
 
         setVisible(false);
-        getParent().add(new SearchGUI(mainContainer, restaurantList, optionList, optionStateList,
+        getParent().add(new SearchGUI(restaurantList, optionList, optionStateList,
             SearchGUI.SEARCHED_STATE));
         getParent().remove(searchGUI);
 
@@ -219,7 +219,7 @@ public class SearchGUI extends JPanel {
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           setVisible(false);
-          getParent().add(new MainGUI(mainContainer, restaurantList, optionList));
+          getParent().add(new MainGUI(restaurantList, optionList));
           getParent().remove(searchGUI);
         }
       }
@@ -234,7 +234,7 @@ public class SearchGUI extends JPanel {
         while (true) {
           if (searchResultList.getSelectedValue().equals(restaurantList.get(i).getName())) {
             ArrayList<Boolean> optionStateList = getOptionStateList();
-            new RestaurantInfoGUI(mainContainer, restaurantList.get(i), restaurantList, optionList,
+            new RestaurantInfoGUI(restaurantList.get(i), restaurantList, optionList,
                 optionStateList, searchGUI
                 , RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
             break;

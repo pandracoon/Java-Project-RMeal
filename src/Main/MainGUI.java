@@ -13,7 +13,7 @@ public class MainGUI extends JPanel {
   String[] answer = {"예", "아니오"};
   MainGUI mainGUI = this;
 
-  MainGUI(Container mainContainer, RestaurantList restaurantList, OptionList optionList) {
+  MainGUI(RestaurantList restaurantList, OptionList optionList) {
 
     setLayout(null);
     setBackground(Color.WHITE);
@@ -31,7 +31,7 @@ public class MainGUI extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        getParent().add(new AddGUI(mainContainer, restaurantList, optionList));
+        getParent().add(new AddGUI(restaurantList, optionList));
         getParent().remove(mainGUI);
       }
     });
@@ -45,7 +45,7 @@ public class MainGUI extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        getParent().add(new SearchGUI(mainContainer, restaurantList, optionList, null,
+        getParent().add(new SearchGUI(restaurantList, optionList, null,
             SearchGUI.INITIAL_STATE));
         getParent().remove(mainGUI);
       }
@@ -59,7 +59,7 @@ public class MainGUI extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        getParent().add(new RecommendGUI(mainContainer, restaurantList, optionList, null,
+        getParent().add(new RecommendGUI(restaurantList, optionList, null,
             RecommendGUI.INITIAL_STATE));
         getParent().remove(mainGUI);
       }
@@ -72,7 +72,7 @@ public class MainGUI extends JPanel {
     exitButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(mainContainer, "RMeal을 종료하시겠습니까?", "RMeal 종료",
+        int choice = JOptionPane.showOptionDialog(getParent(), "RMeal을 종료하시겠습니까?", "RMeal 종료",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
 
         if (choice == 0) {

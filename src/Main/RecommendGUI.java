@@ -24,7 +24,7 @@ public class RecommendGUI extends JPanel {
   Restaurant recommendedRestaurant;
   RecommendGUI recommendGUI = this;
 
-  public RecommendGUI(Container mainContainer, RestaurantList restaurantList, OptionList optionList,
+  public RecommendGUI(RestaurantList restaurantList, OptionList optionList,
       ArrayList<Boolean> optionStateList, int state) {
 
     setBackground(Color.WHITE);
@@ -172,7 +172,7 @@ public class RecommendGUI extends JPanel {
     showButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        new RestaurantInfoGUI(mainContainer, recommendedRestaurant, null, null, null, null,
+        new RestaurantInfoGUI(recommendedRestaurant, null, null, null, null,
             RestaurantInfoGUI.FROM_RECOMMENDGUI).setLocationRelativeTo(null);
       }
     });
@@ -183,10 +183,10 @@ public class RecommendGUI extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        mainContainer.remove(recommendGUI);
-        mainContainer
-            .add(new RecommendGUI(mainContainer, restaurantList, optionList, getOptionStateList(),
+        getParent()
+            .add(new RecommendGUI(restaurantList, optionList, getOptionStateList(),
                 RecommendGUI.SEARCHED_STATE));
+        getParent().remove(recommendGUI);
       }
     });
     add(recommendButton);
@@ -195,12 +195,12 @@ public class RecommendGUI extends JPanel {
     backButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(mainContainer, "메인 화면으로 돌아가시겠습니까?", "돌아가기",
+        int choice = JOptionPane.showOptionDialog(getParent(), "메인 화면으로 돌아가시겠습니까?", "돌아가기",
             JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
         if (choice == 0) {
           setVisible(false);
-          mainContainer.remove(recommendGUI);
-          mainContainer.add(new MainGUI(mainContainer, restaurantList, optionList));
+          getParent().add(new MainGUI(restaurantList, optionList));
+          getParent().remove(recommendGUI);
         }
       }
     });

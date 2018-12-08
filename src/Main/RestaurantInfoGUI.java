@@ -21,7 +21,7 @@ public class RestaurantInfoGUI extends JFrame {
   ArrayList<Boolean> optionStateList;
   RestaurantInfoGUI restaurantInfoGUI = this;
 
-  RestaurantInfoGUI(Container mainContainer, Restaurant restaurant, RestaurantList restaurantList,
+  RestaurantInfoGUI(Restaurant restaurant, RestaurantList restaurantList,
       OptionList optionList, ArrayList<Boolean> optionStateList, SearchGUI searchGUI, int state) {
     setTitle(restaurant.getName());
 
@@ -77,7 +77,7 @@ public class RestaurantInfoGUI extends JFrame {
       modifyButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          new ModifyRestaurantInfoGUI(mainContainer, restaurant, optionList, optionStateList,
+          new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList,
               restaurantList, searchGUI, restaurantInfoGUI).setLocationRelativeTo(null);
         }
       });
@@ -87,18 +87,17 @@ public class RestaurantInfoGUI extends JFrame {
       deleteButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          int choice = JOptionPane.showOptionDialog(mainContainer, "식당을 삭제하시겠습니까?", "식당 삭제",
+          int choice = JOptionPane.showOptionDialog(searchGUI.getParent(), "식당을 삭제하시겠습니까?", "식당 삭제",
               JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
           if (choice == 0) {
             deleteRestaurant(restaurant, restaurantList, optionList);
-            JOptionPane.showMessageDialog(mainContainer, "삭제되었습니다!", "삭제 성공",
+            JOptionPane.showMessageDialog(searchGUI.getParent(), "삭제되었습니다!", "삭제 성공",
                 JOptionPane.INFORMATION_MESSAGE);
             dispose();
             searchGUI.setVisible(false);
-            mainContainer.remove(searchGUI);
-            mainContainer
-                .add(new SearchGUI(mainContainer, restaurantList, optionList, optionStateList,
+            searchGUI.getParent().add(new SearchGUI(restaurantList, optionList, optionStateList,
                     SearchGUI.SEARCHED_STATE));
+            searchGUI.getParent().remove(searchGUI);
 
           }
         }
