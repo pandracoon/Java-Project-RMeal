@@ -58,7 +58,7 @@ public class RestaurantInfoGUI extends JFrame {
       resOptionNameList[i] = restaurant.getOptionList().get(i);
     }
 
-    JPanel resOptionListPanel = createJPanel(10, 52, 415, 440);
+    JPanel resOptionListPanel = createJPanel(10, 62, 415, 440);
     resOptionListPanel.setBackground(Color.WHITE);
     resOptionListPanel.setBorder(createTextBorder("특징", 28));
     resOptionListPanel.setLayout(new GridLayout(0, 1));
@@ -73,7 +73,7 @@ public class RestaurantInfoGUI extends JFrame {
     /////////////////////////////////////버튼/////////////////////////////////////////////
 
     if (state == FROM_SEARCHGUI) {
-      JButton modifyButton = createJButton("수정하기", 60, 502, 100, 50, 17);
+      JButton modifyButton = createJButton("수정하기", 60, 512, 100, 50, 17);
       modifyButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -83,7 +83,7 @@ public class RestaurantInfoGUI extends JFrame {
       });
       infoContainer.add(modifyButton);
 
-      JButton deleteButton = createJButton("삭제하기", 170, 502, 100, 50, 17);
+      JButton deleteButton = createJButton("삭제하기", 170, 512, 100, 50, 17);
       deleteButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -104,7 +104,7 @@ public class RestaurantInfoGUI extends JFrame {
       });
       infoContainer.add(deleteButton);
 
-      JButton backButton = createJButton("돌아가기", 280, 502, 100, 50, 17);
+      JButton backButton = createJButton("돌아가기", 280, 512, 100, 50, 17);
       backButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -115,7 +115,7 @@ public class RestaurantInfoGUI extends JFrame {
     }
 
     if (state == FROM_RECOMMENDGUI) {
-      JButton backButton = createJButton("돌아가기", 320, 502, 100, 50, 17);
+      JButton backButton = createJButton("돌아가기", 320, 512, 100, 50, 17);
       backButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {

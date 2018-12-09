@@ -145,12 +145,13 @@ public class ModifyRestaurantInfoGUI extends JFrame {
           dispose();
           restaurantInfoGUI.dispose();
           searchGUI.setVisible(false);
-          searchGUI.getParent().add(new SearchGUI(restaurantList, optionList,
-              optionStateList, SearchGUI.SEARCHED_STATE));
+          SearchGUI updatedGUI = new SearchGUI(restaurantList, optionList, optionStateList,
+              SearchGUI.SEARCHED_STATE);
+          searchGUI.getParent().add(updatedGUI);
           searchGUI.getParent().remove(searchGUI);
           new RestaurantInfoGUI(modifiedRestaurant, restaurantList, optionList,
               optionStateList,
-              searchGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
+              updatedGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
 
         }
       }
