@@ -7,15 +7,15 @@ public class Restaurant implements Serializable {
 
   private String name;
   private String location;
-  private ArrayList<String> optionArrayList = new ArrayList<String>();
+  private ArrayList<String> optionArrayList = new ArrayList<>();
 
 
-  public Restaurant(String name, String location) {
+  Restaurant(String name, String location) {
     this.name = name;
     this.location = location;
   }
 
-  public void addOption(String option) {
+  void addOption(String option) {
     optionArrayList.add(option);
   }
 

@@ -4,16 +4,16 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class CreateComponent {
+class CreateComponent {
 
-  public static JPanel createJPanel(int x, int y, int width, int height) {
+  static JPanel createJPanel(int x, int y, int width, int height) {
     JPanel jPanel = new JPanel();
     jPanel.setLocation(x, y);
     jPanel.setSize(width, height);
     return jPanel;
   }
 
-  public static JCheckBox createJCheckBox(String text, int width, int height, int size) {
+  static JCheckBox createJCheckBox(String text, int width, int height, int size) {
     JCheckBox jCheckBox = new JCheckBox(text);
     jCheckBox.setSize(width, height);
     jCheckBox.setFont(new Font("함초롬돋움", Font.BOLD, size));
@@ -21,7 +21,7 @@ public class CreateComponent {
     return jCheckBox;
   }
 
-  public static JCheckBox createJCheckBox(String text, int width, int height, int size,
+  static JCheckBox createJCheckBox(String text, int width, int height, int size,
       boolean state) {
     JCheckBox jCheckBox = new JCheckBox(text, state);
     jCheckBox.setSize(width, height);
@@ -30,7 +30,7 @@ public class CreateComponent {
     return jCheckBox;
   }
 
-  public static JButton createJButton(String text, int x, int y, int width, int height,
+  static JButton createJButton(String text, int x, int y, int width, int height,
       int size) {
     JButton jButton = new JButton(text);
     jButton.setLocation(x, y);
@@ -39,7 +39,7 @@ public class CreateComponent {
     return jButton;
   }
 
-  public static JLabel createJLabel(String text, int x, int y, int width, int height,
+  static JLabel createJLabel(String text, int x, int y, int width, int height,
       int size) {
     JLabel jLabel = new JLabel(text);
     jLabel.setLocation(x, y);
@@ -49,7 +49,7 @@ public class CreateComponent {
     return jLabel;
   }
 
-  public static Border createTextBorder(String text, int size) {
+  static Border createTextBorder(String text, int size) {
     Border textBorder = BorderFactory.createEtchedBorder();
     textBorder = BorderFactory.createTitledBorder(textBorder, text);
     ((TitledBorder) textBorder).setTitleFont(new Font("함초롬돋움", Font.BOLD, size));

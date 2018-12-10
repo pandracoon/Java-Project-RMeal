@@ -10,9 +10,9 @@ import javax.swing.*;
 
 public class RMealMainFrame extends JFrame {
 
-  String[] answer = {"예", "아니오"};
+  private String[] answer = {"예", "아니오"};
 
-  RMealMainFrame(RestaurantList restaurantList, OptionList optionList) {
+  private RMealMainFrame(RestaurantList restaurantList, OptionList optionList) {
     setTitle("RMeal");
 
     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -30,8 +30,6 @@ public class RMealMainFrame extends JFrame {
         if (choice == 0) {
           dataSave(restaurantList, optionList);
           System.exit(1);
-        } else {
-          return;
         }
       }
     });
@@ -41,7 +39,6 @@ public class RMealMainFrame extends JFrame {
     setSize(1000, 800);
     setVisible(true);
 
-
   }
 
   public static void main(String[] args) {
@@ -49,8 +46,7 @@ public class RMealMainFrame extends JFrame {
     RestaurantList restaurantList = new RestaurantList();
     OptionList optionList = new OptionList();
 
-    if (objects == null) {
-    } else {
+    if (objects != null) {
       restaurantList = (RestaurantList) objects[0];
       optionList = (OptionList) objects[1];
     }

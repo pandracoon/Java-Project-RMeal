@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class RestaurantManager {
 
-  public static final int CLEAR = -1;
+  private static final int CLEAR = -1;
 
   public static Restaurant addRestaurant(Container container, RestaurantList restaurantList,
       ArrayList<Boolean> optionStateList, OptionList optionList, String name, String location) {
@@ -90,7 +90,6 @@ public class RestaurantManager {
     if (restaurantList.size() == 0) {
       optionList.getList(OptionList.LOC).remove(restaurant.getLocation());
     }
-    return;
   }
 
   public static Restaurant modifyRestaurant(Restaurant restaurant, OptionList optionList,
@@ -128,7 +127,7 @@ public class RestaurantManager {
   }
 
 
-  public static RestaurantList filterList(ArrayList<String> optionList,
+  private static RestaurantList filterList(ArrayList<String> optionList,
       RestaurantList restaurantList, ArrayList<Boolean> optionStateList, int listNum) {
     RestaurantList filteredList = new RestaurantList();
 
@@ -142,25 +141,25 @@ public class RestaurantManager {
     }
 
     if (listNum == OptionList.LOC) {
-      for (int i = 0; i < restaurantList.size(); i++) {
+      for (Restaurant restaurant : restaurantList) {
         for (int j = 0; j < optionList.size(); j++) {
           if (!optionStateList.get(j + 5 * listNum)) {
             continue;
           }
-          if (restaurantList.get(i).getLocation().equals(optionList.get(j))) {
-            filteredList.add(restaurantList.get(i));
+          if (restaurant.getLocation().equals(optionList.get(j))) {
+            filteredList.add(restaurant);
             break;
           }
         }
       }
     } else {
-      for (int i = 0; i < restaurantList.size(); i++) {
+      for (Restaurant restaurant : restaurantList) {
         for (int j = 0; j < optionList.size(); j++) {
           if (!optionStateList.get(j + 5 * listNum)) {
             continue;
           }
-          if (restaurantList.get(i).getOptionList().contains(optionList.get(j))) {
-            filteredList.add(restaurantList.get(i));
+          if (restaurant.getOptionList().contains(optionList.get(j))) {
+            filteredList.add(restaurant);
             break;
           }
         }
@@ -169,7 +168,7 @@ public class RestaurantManager {
     return filteredList;
   }
 
-  public static int isNameContained(Restaurant restaurant, String name,
+  private static int isNameContained(Restaurant restaurant, String name,
       RestaurantList restaurantList) {
 
     for (int i = 0; i < restaurantList.size(); i++) {

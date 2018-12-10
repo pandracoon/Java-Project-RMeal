@@ -10,13 +10,13 @@ public class OptionList implements Serializable {
   public static final int NUM = 2;
   public static final int LOC = 3;
 
-  private ArrayList<String> typeList = new ArrayList<String>();
+  private ArrayList<String> typeList = new ArrayList<>();
 
-  private ArrayList<String> costList = new ArrayList<String>();
+  private ArrayList<String> costList = new ArrayList<>();
 
-  private ArrayList<String> numOfPeopleList = new ArrayList<String>();
+  private ArrayList<String> numOfPeopleList = new ArrayList<>();
 
-  private ArrayList<String> locationList = new ArrayList<String>();
+  private ArrayList<String> locationList = new ArrayList<>();
 
   public OptionList() {
     typeList.add("한식");
@@ -56,10 +56,8 @@ public class OptionList implements Serializable {
   }
 
 
-  public void addLocation(String location) {
+  void addLocation(String location) {
     locationList.add(location);
-    return;
-
   }
 }
 

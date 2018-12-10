@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 
-public class ModifyRestaurantInfoGUI extends JFrame {
+class ModifyRestaurantInfoGUI extends JFrame {
 
-  String[] answer = {"예", "아니오"};
-  JCheckBox[] typeCheckBox;
-  JCheckBox[] costCheckBox;
-  JCheckBox[] numOfPeopleCheckBox;
+  private String[] answer = {"예", "아니오"};
+  private JCheckBox[] typeCheckBox;
+  private JCheckBox[] costCheckBox;
+  private JCheckBox[] numOfPeopleCheckBox;
 
-  public ModifyRestaurantInfoGUI(Restaurant restaurant,
+  ModifyRestaurantInfoGUI(Restaurant restaurant,
       OptionList optionList, ArrayList<Boolean> optionStateList, RestaurantList restaurantList,
       SearchGUI searchGUI, RestaurantInfoGUI restaurantInfoGUI) {
 
@@ -80,23 +80,23 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     numOfPeopleCheckBoxPanel.setBorder(createTextBorder("인원", 28));
     optionSetPanel.add(numOfPeopleCheckBoxPanel);
 
-    typeCheckBox = new JCheckBox[optionList.getList(optionList.TYPE).size()];
-    for (int i = 0; i < optionList.getList(optionList.TYPE).size(); i++) {
-      typeCheckBox[i] = createJCheckBox(optionList.getList(optionList.TYPE).get(i), 200, 50, 20
+    typeCheckBox = new JCheckBox[optionList.getList(OptionList.TYPE).size()];
+    for (int i = 0; i < optionList.getList(OptionList.TYPE).size(); i++) {
+      typeCheckBox[i] = createJCheckBox(optionList.getList(OptionList.TYPE).get(i), 200, 50, 20
           , isContained(restaurant, optionList, OptionList.TYPE, i));
       typeCheckBoxPanel.add(typeCheckBox[i]);
     }
 
-    costCheckBox = new JCheckBox[optionList.getList(optionList.COST).size()];
-    for (int i = 0; i < optionList.getList(optionList.COST).size(); i++) {
-      costCheckBox[i] = createJCheckBox(optionList.getList(optionList.COST).get(i), 200, 50, 20
+    costCheckBox = new JCheckBox[optionList.getList(OptionList.COST).size()];
+    for (int i = 0; i < optionList.getList(OptionList.COST).size(); i++) {
+      costCheckBox[i] = createJCheckBox(optionList.getList(OptionList.COST).get(i), 200, 50, 20
           , isContained(restaurant, optionList, OptionList.COST, i));
       costCheckBoxPanel.add(costCheckBox[i]);
     }
 
-    numOfPeopleCheckBox = new JCheckBox[optionList.getList(optionList.NUM).size()];
-    for (int i = 0; i < optionList.getList(optionList.NUM).size(); i++) {
-      numOfPeopleCheckBox[i] = createJCheckBox(optionList.getList(optionList.NUM).get(i), 200, 50,
+    numOfPeopleCheckBox = new JCheckBox[optionList.getList(OptionList.NUM).size()];
+    for (int i = 0; i < optionList.getList(OptionList.NUM).size(); i++) {
+      numOfPeopleCheckBox[i] = createJCheckBox(optionList.getList(OptionList.NUM).get(i), 200, 50,
           20, isContained(restaurant, optionList, OptionList.NUM, i));
       numOfPeopleCheckBoxPanel.add(numOfPeopleCheckBox[i]);
     }
@@ -106,54 +106,47 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     /////////////////////////////////////////버튼//////////////////////////////////////////////
 
     JButton backButton = createJButton("돌아가기", 765, 696, 100, 50, 17);
-    backButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(modifyContainer, "수정하지 않고 돌아가시겠습니까?", "돌아가기",
-            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
-        if (choice == 0) {
-          dispose();
-        }
+    backButton.addActionListener(e -> {
+      int choice = JOptionPane.showOptionDialog(modifyContainer, "수정하지 않고 돌아가시겠습니까?", "돌아가기",
+          JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+      if (choice == 0) {
+        dispose();
+
       }
     });
     modifyContainer.add(backButton);
 
     JButton addButton = createJButton("수정하기", 875, 695, 100, 50, 17);
-    addButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        if (nameTextField.getText().equals("") || locationTextField.getText().equals("")) {
-          JOptionPane
-              .showMessageDialog(modifyContainer, "이름과 위치를 적어주세요.", "수정 실패",
-                  JOptionPane.INFORMATION_MESSAGE);
+    addButton.addActionListener(e -> {
+      if (nameTextField.getText().equals("") || locationTextField.getText().equals("")) {
+        JOptionPane
+            .showMessageDialog(modifyContainer, "이름과 위치를 적어주세요.", "수정 실패",
+                JOptionPane.INFORMATION_MESSAGE);
+        return;
+      }
+      int choice = JOptionPane
+          .showOptionDialog(modifyContainer, "수정하시겠습니까?", "수정하기", JOptionPane.YES_NO_OPTION,
+              JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+      if (choice == 0) {
+        Restaurant modifiedRestaurant = modifyRestaurant(restaurant, optionList, restaurantList,
+            getOptionStateList(), nameTextField.getText(), locationTextField.getText(),
+            modifyContainer);
+        if (modifiedRestaurant == null) {
           return;
         }
-        int choice = JOptionPane
-            .showOptionDialog(modifyContainer, "수정하시겠습니까?", "수정하기", JOptionPane.YES_NO_OPTION,
-                JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
-        if (choice == 0) {
-          ArrayList<Boolean> modifyOptionStateList = optionStateList();
-          Restaurant modifiedRestaurant = modifyRestaurant(restaurant, optionList, restaurantList,
-              modifyOptionStateList, nameTextField.getText(), locationTextField.getText(),
-              modifyContainer);
-          if (modifiedRestaurant == null) {
-            return;
-          }
-          JOptionPane
-              .showMessageDialog(modifyContainer, "수정되었습니다!", "수정 성공",
-                  JOptionPane.INFORMATION_MESSAGE);
-          dispose();
-          restaurantInfoGUI.dispose();
-          searchGUI.setVisible(false);
-          SearchGUI updatedGUI = new SearchGUI(restaurantList, optionList, optionStateList,
-              SearchGUI.SEARCHED_STATE);
-          searchGUI.getParent().add(updatedGUI);
-          searchGUI.getParent().remove(searchGUI);
-          new RestaurantInfoGUI(modifiedRestaurant, restaurantList, optionList,
-              optionStateList,
-              updatedGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
-
-        }
+        JOptionPane
+            .showMessageDialog(modifyContainer, "수정되었습니다!", "수정 성공",
+                JOptionPane.INFORMATION_MESSAGE);
+        dispose();
+        restaurantInfoGUI.dispose();
+        searchGUI.setVisible(false);
+        SearchGUI updatedGUI = new SearchGUI(restaurantList, optionList, optionStateList,
+            SearchGUI.SEARCHED_STATE);
+        searchGUI.getParent().add(updatedGUI);
+        searchGUI.getParent().remove(searchGUI);
+        new RestaurantInfoGUI(modifiedRestaurant, restaurantList, optionList,
+            optionStateList,
+            updatedGUI, RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
       }
     });
     modifyContainer.add(addButton);
@@ -164,28 +157,25 @@ public class ModifyRestaurantInfoGUI extends JFrame {
     setVisible(true);
   }
 
-  public static boolean isContained(Restaurant restaurant, OptionList optionList, int listType,
+  private static boolean isContained(Restaurant restaurant, OptionList optionList, int listType,
       int optionNum) {
-    if (restaurant.getOptionList().contains(optionList.getList(listType).get(optionNum))) {
-      return true;
-    }
-    return false;
+    return restaurant.getOptionList().contains(optionList.getList(listType).get(optionNum));
   }
 
-  public ArrayList<Boolean> optionStateList() {
+  private ArrayList<Boolean> getOptionStateList() {
 
-    ArrayList<Boolean> optionStateList = new ArrayList<Boolean>();
+    ArrayList<Boolean> optionStateList = new ArrayList<>();
 
-    for (int i = 0; i < typeCheckBox.length; i++) {
-      optionStateList.add(this.typeCheckBox[i].isSelected());
+    for (JCheckBox checkBox : this.typeCheckBox) {
+      optionStateList.add(checkBox.isSelected());
     }
 
-    for (int i = 0; i < costCheckBox.length; i++) {
-      optionStateList.add(this.costCheckBox[i].isSelected());
+    for (JCheckBox checkBox : this.costCheckBox) {
+      optionStateList.add(checkBox.isSelected());
     }
 
-    for (int i = 0; i < numOfPeopleCheckBox.length; i++) {
-      optionStateList.add(this.numOfPeopleCheckBox[i].isSelected());
+    for (JCheckBox checkBox : this.numOfPeopleCheckBox) {
+      optionStateList.add(checkBox.isSelected());
     }
 
     return optionStateList;

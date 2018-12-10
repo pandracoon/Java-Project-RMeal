@@ -9,23 +9,22 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class SearchGUI extends JPanel {
+class SearchGUI extends JPanel {
 
-  String[] answer = {"예", "아니오"};
-  String[] searchResultNameList;
-  JCheckBox[] typeCheckBox;
-  JCheckBox[] costCheckBox;
-  JCheckBox[] numOfPeopleCheckBox;
-  JCheckBox[] locationCheckBox;
-  SearchGUI searchGUI = this;
-  JList<String> searchResultList;
+  private String[] answer = {"예", "아니오"};
+  private String[] searchResultNameList;
+  private JCheckBox[] typeCheckBox;
+  private JCheckBox[] costCheckBox;
+  private JCheckBox[] numOfPeopleCheckBox;
+  private JCheckBox[] locationCheckBox;
+  private SearchGUI searchGUI = this;
+  private JList<String> searchResultList;
 
-  public static final int INITIAL_STATE = 0;
-  public static final int SEARCHED_STATE = 1;
+  static final int INITIAL_STATE = 0;
+  static final int SEARCHED_STATE = 1;
 
   SearchGUI(RestaurantList restaurantList, OptionList optionList,
-      ArrayList<Boolean> optionStateList,
-      int state) {
+      ArrayList<Boolean> optionStateList, int state) {
 
     setLayout(null);
     setBackground(Color.WHITE);
@@ -77,58 +76,58 @@ public class SearchGUI extends JPanel {
     locationCheckBoxScrollPane.setBackground(Color.WHITE);
     optionSetPanel.add(locationCheckBoxScrollPane);
     if (state == INITIAL_STATE) {
-      typeCheckBox = new JCheckBox[optionList.getList(optionList.TYPE).size()];
-      for (int i = 0; i < optionList.getList(optionList.TYPE).size(); i++) {
-        typeCheckBox[i] = createJCheckBox(optionList.getList(optionList.TYPE).get(i), 200, 50, 20);
+      typeCheckBox = new JCheckBox[optionList.getList(OptionList.TYPE).size()];
+      for (int i = 0; i < optionList.getList(OptionList.TYPE).size(); i++) {
+        typeCheckBox[i] = createJCheckBox(optionList.getList(OptionList.TYPE).get(i), 200, 50, 20);
         typeCheckBoxPanel.add(typeCheckBox[i]);
       }
 
-      costCheckBox = new JCheckBox[optionList.getList(optionList.COST).size()];
-      for (int i = 0; i < optionList.getList(optionList.COST).size(); i++) {
-        costCheckBox[i] = createJCheckBox(optionList.getList(optionList.COST).get(i), 200, 50, 20);
+      costCheckBox = new JCheckBox[optionList.getList(OptionList.COST).size()];
+      for (int i = 0; i < optionList.getList(OptionList.COST).size(); i++) {
+        costCheckBox[i] = createJCheckBox(optionList.getList(OptionList.COST).get(i), 200, 50, 20);
         costCheckBoxPanel.add(costCheckBox[i]);
       }
 
-      numOfPeopleCheckBox = new JCheckBox[optionList.getList(optionList.NUM).size()];
-      for (int i = 0; i < optionList.getList(optionList.NUM).size(); i++) {
-        numOfPeopleCheckBox[i] = createJCheckBox(optionList.getList(optionList.NUM).get(i), 200, 50,
+      numOfPeopleCheckBox = new JCheckBox[optionList.getList(OptionList.NUM).size()];
+      for (int i = 0; i < optionList.getList(OptionList.NUM).size(); i++) {
+        numOfPeopleCheckBox[i] = createJCheckBox(optionList.getList(OptionList.NUM).get(i), 200, 50,
             20);
         numOfPeopleCheckBoxPanel.add(numOfPeopleCheckBox[i]);
       }
 
-      locationCheckBox = new JCheckBox[optionList.getList(optionList.LOC).size()];
-      for (int i = 0; i < optionList.getList(optionList.LOC).size(); i++) {
-        locationCheckBox[i] = createJCheckBox(optionList.getList(optionList.LOC).get(i), 200, 50,
+      locationCheckBox = new JCheckBox[optionList.getList(OptionList.LOC).size()];
+      for (int i = 0; i < optionList.getList(OptionList.LOC).size(); i++) {
+        locationCheckBox[i] = createJCheckBox(optionList.getList(OptionList.LOC).get(i), 200, 50,
             20);
         locationCheckBoxPanel.add(locationCheckBox[i]);
       }
     }
 
     if (state == SEARCHED_STATE) {
-      typeCheckBox = new JCheckBox[optionList.getList(optionList.TYPE).size()];
-      for (int i = 0; i < optionList.getList(optionList.TYPE).size(); i++) {
-        typeCheckBox[i] = createJCheckBox(optionList.getList(optionList.TYPE).get(i), 200, 50, 20
+      typeCheckBox = new JCheckBox[optionList.getList(OptionList.TYPE).size()];
+      for (int i = 0; i < optionList.getList(OptionList.TYPE).size(); i++) {
+        typeCheckBox[i] = createJCheckBox(optionList.getList(OptionList.TYPE).get(i), 200, 50, 20
             , optionStateList.get(i));
         typeCheckBoxPanel.add(typeCheckBox[i]);
       }
 
-      costCheckBox = new JCheckBox[optionList.getList(optionList.COST).size()];
-      for (int i = 0; i < optionList.getList(optionList.COST).size(); i++) {
-        costCheckBox[i] = createJCheckBox(optionList.getList(optionList.COST).get(i), 200, 50, 20
+      costCheckBox = new JCheckBox[optionList.getList(OptionList.COST).size()];
+      for (int i = 0; i < optionList.getList(OptionList.COST).size(); i++) {
+        costCheckBox[i] = createJCheckBox(optionList.getList(OptionList.COST).get(i), 200, 50, 20
             , optionStateList.get(i + 5));
         costCheckBoxPanel.add(costCheckBox[i]);
       }
 
-      numOfPeopleCheckBox = new JCheckBox[optionList.getList(optionList.NUM).size()];
-      for (int i = 0; i < optionList.getList(optionList.NUM).size(); i++) {
-        numOfPeopleCheckBox[i] = createJCheckBox(optionList.getList(optionList.NUM).get(i), 200, 50,
+      numOfPeopleCheckBox = new JCheckBox[optionList.getList(OptionList.NUM).size()];
+      for (int i = 0; i < optionList.getList(OptionList.NUM).size(); i++) {
+        numOfPeopleCheckBox[i] = createJCheckBox(optionList.getList(OptionList.NUM).get(i), 200, 50,
             20, optionStateList.get(i + 10));
         numOfPeopleCheckBoxPanel.add(numOfPeopleCheckBox[i]);
       }
 
-      locationCheckBox = new JCheckBox[optionList.getList(optionList.LOC).size()];
-      for (int i = 0; i < optionList.getList(optionList.LOC).size(); i++) {
-        locationCheckBox[i] = createJCheckBox(optionList.getList(optionList.LOC).get(i), 200, 50,
+      locationCheckBox = new JCheckBox[optionList.getList(OptionList.LOC).size()];
+      for (int i = 0; i < optionList.getList(OptionList.LOC).size(); i++) {
+        locationCheckBox[i] = createJCheckBox(optionList.getList(OptionList.LOC).get(i), 200, 50,
             20, optionStateList.get(i + 15));
         locationCheckBoxPanel.add(locationCheckBox[i]);
       }
@@ -197,76 +196,66 @@ public class SearchGUI extends JPanel {
     ///////////////////////////////////////////버튼///////////////////////////////////////////
 
     JButton searchButton = createJButton("검색하기", 465, 695, 100, 50, 17);
-    searchButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        ArrayList<Boolean> optionStateList = getOptionStateList();
-
-        setVisible(false);
-        getParent().add(new SearchGUI(restaurantList, optionList, optionStateList,
-            SearchGUI.SEARCHED_STATE));
-        getParent().remove(searchGUI);
-
-      }
+    searchButton.addActionListener(e -> {
+      setVisible(false);
+      getParent().add(new SearchGUI(restaurantList, optionList, getOptionStateList(),
+          SearchGUI.SEARCHED_STATE));
+      getParent().remove(searchGUI);
     });
     add(searchButton);
 
     JButton backButton = createJButton("돌아가기", 765, 695, 100, 50, 17);
-    backButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        int choice = JOptionPane.showOptionDialog(getParent(), "메인 화면으로 돌아가시겠습니까?", "돌아가기",
-            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
-        if (choice == 0) {
-          setVisible(false);
-          getParent().add(new MainGUI(restaurantList, optionList));
-          getParent().remove(searchGUI);
+    backButton.addActionListener(e ->
+        {
+          int choice = JOptionPane.showOptionDialog(getParent(), "메인 화면으로 돌아가시겠습니까?", "돌아가기",
+              JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+          if (choice == 0) {
+            setVisible(false);
+            getParent().add(new MainGUI(restaurantList, optionList));
+            getParent().remove(searchGUI);
+          }
         }
-      }
-    });
+    );
     add(backButton);
 
     JButton showButton = createJButton("정보보기", 875, 695, 100, 50, 17);
-    showButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        int i = 0;
-        while (true) {
-          if (searchResultList.getSelectedValue().equals(restaurantList.get(i).getName())) {
-            ArrayList<Boolean> optionStateList = getOptionStateList();
-            new RestaurantInfoGUI(restaurantList.get(i), restaurantList, optionList,
-                optionStateList, searchGUI
-                , RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
-            break;
+    showButton.addActionListener(e -> {
+          int i = 0;
+          while (true) {
+            if (searchResultList.getSelectedValue().equals(restaurantList.get(i).getName())) {
+              new RestaurantInfoGUI(restaurantList.get(i), restaurantList, optionList,
+                  getOptionStateList(), searchGUI
+                  , RestaurantInfoGUI.FROM_SEARCHGUI).setLocationRelativeTo(null);
+              break;
+            }
+            i++;
           }
-          i++;
         }
-      }
-    });
+    );
     add(showButton);
 
     ///////////////////////////////////////////버튼///////////////////////////////////////////
 
   }
 
-  public ArrayList<Boolean> getOptionStateList() {
+  private ArrayList<Boolean> getOptionStateList() {
 
-    ArrayList<Boolean> optionStateList = new ArrayList<Boolean>();
+    ArrayList<Boolean> optionStateList = new ArrayList<>();
 
-    for (int i = 0; i < typeCheckBox.length; i++) {
-      optionStateList.add(this.typeCheckBox[i].isSelected());
+    for (JCheckBox checkBox : this.typeCheckBox) {
+      optionStateList.add(checkBox.isSelected());
     }
 
-    for (int i = 0; i < costCheckBox.length; i++) {
-      optionStateList.add(this.costCheckBox[i].isSelected());
+    for (JCheckBox checkBox : this.costCheckBox) {
+      optionStateList.add(checkBox.isSelected());
     }
 
-    for (int i = 0; i < numOfPeopleCheckBox.length; i++) {
-      optionStateList.add(this.numOfPeopleCheckBox[i].isSelected());
+    for (JCheckBox checkBox : this.numOfPeopleCheckBox) {
+      optionStateList.add(checkBox.isSelected());
     }
 
-    for (int i = 0; i < locationCheckBox.length; i++) {
-      optionStateList.add(this.locationCheckBox[i].isSelected());
+    for (JCheckBox checkBox : this.locationCheckBox) {
+      optionStateList.add(checkBox.isSelected());
     }
 
     return optionStateList;

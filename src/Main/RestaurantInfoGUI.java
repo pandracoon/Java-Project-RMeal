@@ -7,19 +7,18 @@ import Data.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import java.awt.event.*;
 
 
-public class RestaurantInfoGUI extends JFrame {
+class RestaurantInfoGUI extends JFrame {
 
-  public static final int FROM_SEARCHGUI = 0;
-  public static final int FROM_RECOMMENDGUI = 1;
+  static final int FROM_SEARCHGUI = 0;
+  static final int FROM_RECOMMENDGUI = 1;
 
-  String[] answer = {"예", "아니오"};
-  RestaurantList restaurantList;
-  OptionList optionList;
-  ArrayList<Boolean> optionStateList;
-  RestaurantInfoGUI restaurantInfoGUI = this;
+  private String[] answer = {"예", "아니오"};
+  private RestaurantList restaurantList;
+  private OptionList optionList;
+  private ArrayList<Boolean> optionStateList;
+  private RestaurantInfoGUI restaurantInfoGUI = this;
 
   RestaurantInfoGUI(Restaurant restaurant, RestaurantList restaurantList,
       OptionList optionList, ArrayList<Boolean> optionStateList, SearchGUI searchGUI, int state) {
@@ -36,7 +35,7 @@ public class RestaurantInfoGUI extends JFrame {
     //////////////////////////////////////정보////////////////////////////////////////////
 
     JLabel nameLabel = createJLabel(restaurant.getName() + " / " + restaurant.getLocation(), 10, 10,
-        430, 30, 25);
+        430, 43, 25);
     nameLabel.setFont(new Font("함초롬돋움", Font.BOLD, 35));
     if (restaurant.getName().length() + restaurant.getLocation().length() >= 12) {
       nameLabel.setFont(new Font("함초롬돋움", Font.BOLD, 25));
@@ -74,54 +73,38 @@ public class RestaurantInfoGUI extends JFrame {
 
     if (state == FROM_SEARCHGUI) {
       JButton modifyButton = createJButton("수정하기", 60, 512, 100, 50, 17);
-      modifyButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          new ModifyRestaurantInfoGUI(restaurant, optionList, optionStateList,
-              restaurantList, searchGUI, restaurantInfoGUI).setLocationRelativeTo(null);
-        }
-      });
+      modifyButton.addActionListener(e -> new ModifyRestaurantInfoGUI(restaurant, optionList,
+          optionStateList, restaurantList, searchGUI, restaurantInfoGUI)
+          .setLocationRelativeTo(null));
       infoContainer.add(modifyButton);
 
       JButton deleteButton = createJButton("삭제하기", 170, 512, 100, 50, 17);
-      deleteButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          int choice = JOptionPane.showOptionDialog(searchGUI.getParent(), "식당을 삭제하시겠습니까?", "식당 삭제",
-              JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
-          if (choice == 0) {
-            deleteRestaurant(restaurant, restaurantList, optionList);
-            JOptionPane.showMessageDialog(searchGUI.getParent(), "삭제되었습니다!", "삭제 성공",
-                JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-            searchGUI.setVisible(false);
-            searchGUI.getParent().add(new SearchGUI(restaurantList, optionList, optionStateList,
-                    SearchGUI.SEARCHED_STATE));
-            searchGUI.getParent().remove(searchGUI);
+      deleteButton.addActionListener(e -> {
+        int choice = JOptionPane.showOptionDialog(searchGUI.getParent(), "식당을 삭제하시겠습니까?", "식당 삭제",
+            JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, answer, answer[0]);
+        if (choice == 0) {
+          deleteRestaurant(restaurant, restaurantList, optionList);
+          JOptionPane.showMessageDialog(searchGUI.getParent(), "삭제되었습니다!", "삭제 성공",
+              JOptionPane.INFORMATION_MESSAGE);
+          dispose();
+          searchGUI.setVisible(false);
+          searchGUI.getParent().add(new SearchGUI(restaurantList, optionList, optionStateList,
+              SearchGUI.SEARCHED_STATE));
+          searchGUI.getParent().remove(searchGUI);
 
-          }
         }
+
       });
       infoContainer.add(deleteButton);
 
       JButton backButton = createJButton("돌아가기", 280, 512, 100, 50, 17);
-      backButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          dispose();
-        }
-      });
+      backButton.addActionListener(e -> dispose());
       infoContainer.add(backButton);
     }
 
     if (state == FROM_RECOMMENDGUI) {
       JButton backButton = createJButton("돌아가기", 320, 512, 100, 50, 17);
-      backButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          dispose();
-        }
-      });
+      backButton.addActionListener(e -> dispose());
       infoContainer.add(backButton);
     }
 

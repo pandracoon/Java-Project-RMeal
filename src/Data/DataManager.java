@@ -4,6 +4,7 @@ import java.io.*;
 
 public class DataManager {
 
+  //
   public static void dataSave(RestaurantList restaurantList, OptionList optionList) {
     FileOutputStream fileOutputStream = null;
     ObjectOutputStream objectOutputStream = null;
